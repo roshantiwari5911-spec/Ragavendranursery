@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Ragavendra Nursery - Quotations</title>
+    <title>Sri Ragavendra Nursery - Premium Studio</title>
+    <!-- Tailwind CSS for Ultra-Premium Apple Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Appwrite Web SDK -->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
     <script>
         tailwind.config = {
@@ -12,16 +14,22 @@
                 extend: {
                     colors: {
                         olive: {
-                            50: '#f4f6f0',
-                            100: '#e9ede2',
-                            700: '#4a5d4e',
-                            800: '#344237', // Deep Apple plant green
-                            900: '#232c25',
+                            50: '#fcfdfa',
+                            100: '#f3f6ed',
+                            200: '#e5ebd8',
+                            700: '#435346',
+                            800: '#2f3b32', // Deep premium plant evergreen
+                            900: '#1d241f',
                         },
                         crimson: {
-                            600: '#b91c1c', // Premium striking accent red
+                            600: '#b91c1c', // Striking scarlet red accent
                             700: '#991b1b',
                         }
+                    },
+                    boxShadow: {
+                        'apple-sm': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                        'apple-md': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'apple-lg': '0 12px 40px rgba(0, 0, 0, 0.12)',
                     }
                 }
             }
@@ -29,202 +37,297 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        /* Ghibli Ambient Backdrop Magic */
+        .ghibli-bg {
+            background: linear-gradient(135deg, #1e3a24 0%, #2e5c38 40%, #8cae68 80%, #e2ecc8 100%);
+            background-size: 400% 400%;
+            animation: ghibliSky 20s ease infinite;
+        }
+        @keyframes ghibliSky {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .apple-input {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .apple-input:focus {
+            background-color: #ffffff;
+            border-color: #435346;
+            box-shadow: 0 0 0 4px rgba(67, 83, 70, 0.1);
+        }
+        /* Custom Printed Sheet Control Rules */
+        @media print {
+            body { background: #ffffff !important; color: #000000 !important; }
+            #dashboard-screen { display: block !important; }
+            main { grid-template-cols: 1fr !important; display: block !important; padding: 0 !important; }
+            #print-area { border: none !important; shadow: none !important; width: 100% !important; max-width: 100% !important; height: auto !important; aspect-ratio: auto !important; padding: 0 !important; margin: 0 !important; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
-<body class="bg-olive-50 text-olive-900 min-h-screen transition-all duration-700">
+<body class="bg-olive-50 text-olive-900 min-h-screen">
 
-    <div id="login-screen" class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-br from-olive-900 via-olive-800 to-olive-900 px-4">
-        <div id="ambient-glow" class="absolute w-[500px] h-[500px] rounded-full bg-olive-700/20 blur-[80px] pointer-events-none transition-all duration-300 ease-out"></div>
+    <!-- 1. GHIBLI ARTWORK INTERACTIVE LOGIN PORTAL -->
+    <div id="login-screen" class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden ghibli-bg px-4">
+        <!-- Floating Dreamy Ghibli Ambient Cloud Particles -->
+        <div id="ambient-glow" class="absolute w-[600px] h-[600px] rounded-full bg-yellow-100/20 blur-[100px] pointer-events-none transition-all duration-500 ease-out"></div>
         
-        <div class="text-center mb-8 z-10">
-            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-2 drop-shadow-sm">Sri Ragavendra Nursery</h1>
-            <p class="text-olive-100/80 text-lg md:text-xl font-light tracking-wide">All Kinds of Fruit plants available.</p>
+        <div class="text-center mb-10 z-10 max-w-xl">
+            <!-- Modern Minimal Logo Emblem Grid -->
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/90 shadow-apple-md mb-6 border border-white/40">
+                <span class="text-2xl">🌱</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3 drop-shadow-md">Sri Ragavendra Nursery</h1>
+            <div class="h-[1px] w-24 bg-white/40 mx-auto mb-3"></div>
+            <p class="text-white/90 text-sm md:text-base font-medium tracking-widest uppercase">All Kinds of Fruit plants available</p>
         </div>
 
-        <div id="login-card" class="glass-card w-full max-w-md rounded-2xl p-8 shadow-2xl z-10 border border-white/20 transition-transform duration-200 ease-out">
-            <h3 class="text-2xl font-semibold text-olive-900 mb-6 text-center">Staff Authentication</h3>
-            <form id="auth-form" onsubmit="handleLogin(event)" class="space-y-5">
+        <div id="login-card" class="glass-panel w-full max-w-md rounded-3xl p-8 shadow-apple-lg z-10 transition-transform duration-300 ease-out">
+            <h3 class="text-xl font-bold text-olive-900 mb-6 text-center tracking-tight">Studio Gateways</h3>
+            <form id="auth-form" onsubmit="handleLogin(event)" class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-olive-800 mb-1">Passcode / Key</label>
-                    <input type="password" id="secret-key" required class="w-full px-4 py-3 rounded-xl bg-white/60 border border-olive-700/20 focus:outline-none focus:border-olive-700 transition-colors text-lg tracking-widest text-center" placeholder="••••••••">
+                    <label class="block text-xs font-semibold uppercase tracking-widest text-olive-700 mb-2">Passcode Sequence</label>
+                    <input type="password" id="secret-key" required class="w-full px-4 py-3 rounded-2xl bg-white/40 border border-white/60 text-center text-xl tracking-widest text-olive-900 focus:outline-none focus:bg-white focus:border-olive-700 focus:ring-4 focus:ring-olive-700/10 transition-all placeholder-gray-400/60" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full bg-olive-800 hover:bg-olive-900 text-white font-medium py-3 rounded-xl shadow-lg transition-all transform active:scale-95">Enter Dashboard</button>
+                <button type="submit" class="w-full bg-olive-800 hover:bg-olive-900 text-white font-medium py-3.5 rounded-2xl shadow-apple-md transition-all transform active:scale-[0.98] tracking-wide text-sm">Access Workspace</button>
             </form>
         </div>
     </div>
 
+    <!-- 2. APPLE WORKSPACE DASHBOARD -->
     <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
-        <header class="bg-white border-b border-olive-100 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h2 class="text-2xl font-bold text-olive-800">Sri Ragavendra Nursery</h2>
-                <p class="text-xs text-gray-500">Official Quotation Studio</p>
+        <!-- App Header (No-Print Element) -->
+        <header class="no-print bg-white/80 backdrop-blur-md border-b border-olive-100 px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-40">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-olive-100 flex items-center justify-center text-lg border border-olive-200">🌱</div>
+                <div>
+                    <h2 class="text-lg font-bold text-olive-900 tracking-tight">Sri Ragavendra Nursery</h2>
+                    <p class="text-xs text-olive-700/60 font-medium">Internal Digital Engine</p>
+                </div>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="toggleHistoryModal()" class="px-4 py-2 text-sm font-medium border border-olive-700/30 text-olive-800 rounded-lg hover:bg-olive-50 transition-colors">📄 Retrieve Old Quotes</button>
-                <button onclick="handleLogout()" class="px-4 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">Sign Out</button>
+                <button onclick="toggleHistoryModal()" class="px-4 py-2.5 text-xs font-semibold border border-olive-700/20 text-olive-800 bg-white shadow-apple-sm rounded-xl hover:bg-olive-50 transition-all">📄 Pull Archive Data</button>
+                <button onclick="handleLogout()" class="px-4 py-2.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all">Sign Out</button>
             </div>
         </header>
 
-        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-olive-100 flex flex-col justify-between">
+        <!-- Main Studio Split Screen Grid Configuration -->
+        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 lg:p-8 max-w-[1600px] w-full mx-auto">
+            <!-- Form Parameters Controller Pane (No-Print Element) -->
+            <div class="no-print bg-white rounded-3xl p-6 shadow-apple-sm border border-olive-100/60 flex flex-col justify-between space-y-6">
                 <div class="space-y-6">
-                    <h3 class="text-lg font-semibold text-olive-800 border-b pb-2">1. Customer Information</h3>
+                    <!-- Heading -->
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-olive-700">1. Quote Meta Information</h3>
+                        <div>
+                            <input type="date" id="cust-date" oninput="updateLivePreview()" class="px-3 py-1 bg-olive-50/80 border border-transparent rounded-xl text-xs font-medium text-olive-800 focus:outline-none focus:bg-white focus:border-olive-700">
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Parameters Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-gray-600 mb-1">Customer Name</label>
-                            <input type="text" id="cust-name" oninput="updateLivePreview()" class="w-full px-3 py-2 rounded-lg bg-olive-50/50 border border-gray-200 focus:outline-none focus:border-olive-700 text-sm" placeholder="John Doe">
+                            <label class="block text-xs font-semibold text-gray-500 mb-1.5">Customer Name</label>
+                            <input type="text" id="cust-name" oninput="updateLivePreview()" class="apple-input w-full px-4 py-2.5 rounded-xl bg-olive-50/50 border border-gray-100 focus:outline-none text-sm" placeholder="e.g. Ramesh Kumar">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-600 mb-1">Mobile Number</label>
-                            <input type="tel" id="cust-mobile" oninput="updateLivePreview()" class="w-full px-3 py-2 rounded-lg bg-olive-50/50 border border-gray-200 focus:outline-none focus:border-olive-700 text-sm" placeholder="+91 XXXXX XXXXX">
+                            <label class="block text-xs font-semibold text-gray-500 mb-1.5">Mobile Number</label>
+                            <input type="tel" id="cust-mobile" oninput="updateLivePreview()" class="apple-input w-full px-4 py-2.5 rounded-xl bg-olive-50/50 border border-gray-100 focus:outline-none text-sm" placeholder="e.g. +91 9448515060">
                         </div>
                     </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 mb-1.5">Custom Address</label>
+                        <textarea id="cust-address" rows="2" oninput="updateLivePreview()" class="apple-input w-full px-4 py-2.5 rounded-xl bg-olive-50/50 border border-gray-100 focus:outline-none text-sm resize-none" placeholder="Enter complete shipping or billing address details..."></textarea>
+                    </div>
 
-                    <h3 class="text-lg font-semibold text-olive-800 border-b pb-2 pt-2">2. Plant Inventory Particulars</h3>
+                    <!-- Plant Matrix Data Entry Spreadsheet layout -->
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2 pt-2">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-olive-700">2. Plant Catalog Rows</h3>
+                    </div>
+                    
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm">
+                        <table class="w-full text-left text-xs">
                             <thead>
-                                <tr class="border-b border-gray-100 text-gray-500 font-medium">
-                                    <th class="py-2 w-12">S.No</th>
-                                    <th class="py-2">Particulars (Plant Name)</th>
-                                    <th class="py-2 w-20">Qty</th>
-                                    <th class="py-2 w-28">Amount (₹)</th>
-                                    <th class="py-2 w-12 text-center"></th>
+                                <tr class="text-gray-400 font-bold uppercase tracking-wider border-b border-gray-100">
+                                    <th class="pb-2 w-10">S.No</th>
+                                    <th class="pb-2">Particulars (Plant Name)</th>
+                                    <th class="pb-2 w-16 text-center">Qty</th>
+                                    <th class="pb-2 w-24 text-right">Rate (₹)</th>
+                                    <th class="pb-2 w-10 text-center"></th>
                                 </tr>
                             </thead>
-                            <tbody id="plant-rows">
-                                </tbody>
+                            <tbody id="plant-rows" class="divide-y divide-gray-50">
+                                <!-- Generated Dynamic Data rows dropped here -->
+                            </tbody>
                         </table>
                     </div>
-                    <button onclick="addNewRow()" class="text-sm font-semibold text-olive-700 hover:text-olive-900 flex items-center gap-1">+ Add New Plant Entry</button>
+                    
+                    <button onclick="addNewRow()" class="text-xs font-bold text-olive-700 hover:text-olive-900 flex items-center gap-1.5 bg-olive-50 px-3 py-2 rounded-xl border border-olive-100/50 transition-colors">➕ Add New Plant Entry</button>
+                    
+                    <!-- Transport Logic Interface Blocks -->
+                    <div class="pt-4 border-t border-gray-100 space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="toggle-transport" onchange="handleTransportToggle()" class="w-4 h-4 rounded text-olive-800 border-gray-300 focus:ring-olive-700/20">
+                            <span class="text-xs font-bold text-olive-800 group-hover:text-olive-900">Include Transportation & Labour Logistics</span>
+                        </label>
+                        
+                        <div id="transport-input-panel" class="hidden bg-olive-50/60 rounded-2xl p-4 border border-olive-100/50 animate-fade-in">
+                            <label class="block text-xs font-semibold text-gray-500 mb-1.5">Logistics cost allocation value (₹)</label>
+                            <input type="number" id="transport-cost" value="0" oninput="updateLivePreview()" class="apple-input w-full max-w-xs px-4 py-2.5 rounded-xl bg-white border border-gray-200 focus:outline-none text-sm text-right font-medium" placeholder="0.00">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="pt-6 border-t mt-6 flex justify-between items-center">
-                    <button onclick="saveQuoteToAppwrite()" class="px-6 py-3 bg-olive-800 hover:bg-olive-900 text-white font-medium rounded-xl shadow transition-colors">Sync & Save Quote</button>
-                    <button onclick="window.print()" class="px-6 py-3 bg-crimson-600 hover:bg-crimson-700 text-white font-medium rounded-xl shadow transition-colors flex items-center gap-2">
-                        <span>📥 Download Document PDF</span>
+                <!-- Footer Console CTA Controls -->
+                <div class="pt-6 border-t border-gray-100 flex justify-between items-center gap-4">
+                    <button onclick="saveQuoteToAppwrite()" class="px-5 py-3 bg-white border border-olive-700/30 hover:border-olive-800 text-olive-800 font-semibold text-xs rounded-xl shadow-apple-sm transition-all transform active:scale-[0.98]">Sync Server Archive</button>
+                    <button onclick="window.print()" class="px-6 py-3 bg-crimson-600 hover:bg-crimson-700 text-white font-semibold text-xs rounded-xl shadow-apple-sm transition-all transform active:scale-[0.98] flex items-center gap-2">
+                        <span>📥 Export Premium Invoice PDF</span>
                     </button>
                 </div>
             </div>
 
-            <div id="print-area" class="bg-white rounded-2xl p-8 shadow-md border border-gray-100 flex flex-col justify-between aspect-[1/1.414] text-neutral-800">
+            <!-- Right Side: Beautiful Clean Apple Document Sheet Preview Template Canvas -->
+            <div id="print-area" class="bg-white rounded-3xl p-10 shadow-apple-md border border-gray-100 flex flex-col justify-between aspect-[1/1.414] text-neutral-800 transition-all">
                 <div>
-                    <div class="flex justify-between items-start border-b-2 border-olive-700/20 pb-6 mb-6">
-                        <div>
-                            <h1 class="text-2xl font-bold text-olive-800 tracking-wide">SRI RAGAVENDRA NURSERY</h1>
-                            <p class="text-xs text-olive-700 font-medium tracking-wider uppercase mt-0.5">All Kinds of Fruit plants available</p>
-                            <p class="text-xs text-gray-500 mt-2">📱 +91 9448515060 | +91 8892689595</p>
+                    <!-- Document Invoice Design Header Frame -->
+                    <div class="flex justify-between items-start border-b-2 border-olive-800/10 pb-8 mb-6">
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-olive-800 text-white flex items-center justify-center text-2xl shadow-apple-sm">🌱</div>
+                            <div>
+                                <h1 class="text-xl font-bold text-olive-800 tracking-tight leading-none">SRI RAGAVENDRA NURSERY</h1>
+                                <p class="text-[10px] text-olive-700 font-bold tracking-widest uppercase mt-2">All Kinds of Fruit plants available</p>
+                                <p class="text-[11px] text-gray-500 font-medium mt-1">📱 +91 9448515060 | +91 8892689595</p>
+                            </div>
                         </div>
                         <div class="text-right">
-                            <h2 class="text-xl font-bold text-crimson-600 tracking-tight">QUOTATION</h2>
-                            <p class="text-xs text-gray-400 mt-1" id="preview-date">Date: DD/MM/YYYY</p>
+                            <h2 class="text-base font-bold text-crimson-600 tracking-widest uppercase">Quotation</h2>
+                            <p class="text-xs font-semibold text-neutral-900 mt-2" id="preview-date">Date: --/--/----</p>
                         </div>
                     </div>
 
-                    <div class="bg-olive-50/50 rounded-xl p-4 mb-6 grid grid-cols-2 gap-4 text-xs border border-olive-100/50">
-                        <div>
-                            <p class="text-gray-400 uppercase font-medium tracking-wider mb-1">Prepared For</p>
-                            <p id="p-name" class="font-semibold text-sm text-olive-900">-</p>
+                    <!-- Client Target Metadata Profile Layout Block -->
+                    <div class="grid grid-cols-3 gap-6 text-xs border-b border-gray-100 pb-6 mb-6">
+                        <div class="col-span-1">
+                            <p class="text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Prepared For</p>
+                            <p id="p-name" class="font-bold text-sm text-neutral-900">-</p>
+                            <p id="p-mobile" class="font-semibold text-gray-500 mt-0.5">-</p>
                         </div>
-                        <div>
-                            <p class="text-gray-400 uppercase font-medium tracking-wider mb-1">Contact Reference</p>
-                            <p id="p-mobile" class="font-semibold text-sm text-olive-900">-</p>
+                        <div class="col-span-2 border-l border-gray-100 pl-6">
+                            <p class="text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Delivery Destination Address</p>
+                            <p id="p-address" class="font-medium text-neutral-700 whitespace-pre-wrap leading-relaxed">-</p>
                         </div>
                     </div>
 
+                    <!-- Dynamic Rendered Plant Inventory Matrix Array Block Layout Table -->
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="bg-olive-800 text-white uppercase font-semibold tracking-wider">
-                                <th class="p-3 rounded-l-md w-12 text-center">S.No</th>
+                            <tr class="bg-olive-800 text-white uppercase font-bold tracking-wider">
+                                <th class="p-3 rounded-l-xl w-12 text-center">S.No</th>
                                 <th class="p-3">Particulars (Plants Name)</th>
                                 <th class="p-3 w-16 text-center">Qty</th>
-                                <th class="p-3 w-24 text-right rounded-r-md">Amount</th>
+                                <th class="p-3 w-28 text-right rounded-r-xl">Amount</th>
                             </tr>
                         </thead>
-                        <tbody id="preview-rows" class="divide-y divide-gray-100">
-                            </tbody>
+                        <tbody id="preview-rows" class="divide-y divide-gray-100 text-neutral-800">
+                            <!-- Live reactive items output site -->
+                        </tbody>
                     </table>
                 </div>
 
-                <div class="border-t pt-4 mt-6 flex justify-between items-center">
-                    <div class="text-xs text-gray-400">
-                        <p>Thank you for shopping with us!</p>
-                        <p class="italic mt-0.5">Subject to terms & availability.</p>
+                <!-- Aggregated Financial Calculations Stack Panel Block -->
+                <div class="border-t border-neutral-200/60 pt-6 mt-6 flex justify-between items-end">
+                    <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs">
+                        <p class="font-semibold text-neutral-500">Notice Rules Statement</p>
+                        <p class="mt-0.5">Thank you for evaluating our inventory. Estimates are subject to field stock limitations and price flux.</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-xs text-gray-400 font-medium uppercase tracking-widest block mb-0.5">Estimated Total Cost</span>
-                        <span id="p-total" class="text-2xl font-bold text-crimson-600">₹0.00</span>
+                    
+                    <div class="w-64 space-y-2 text-xs">
+                        <!-- Conditional Plant total row -->
+                        <div id="p-subtotal-row" class="hidden flex justify-between text-gray-500 font-medium">
+                            <span>Plants Total Cost:</span>
+                            <span id="p-subtotal">₹0.00</span>
+                        </div>
+                        <!-- Conditional Logistics Allocation row -->
+                        <div id="p-transport-row" class="hidden flex justify-between text-gray-500 font-medium">
+                            <span>Transport & Labour:</span>
+                            <span id="p-transport">₹0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-200">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Grand Net Total</span>
+                            <span id="p-total" class="text-2xl font-bold text-crimson-600 tracking-tight">₹0.00</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="history-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[80vh] flex flex-col">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <h3 class="text-lg font-bold text-olive-800">Historical Quotes Database</h3>
-                <button onclick="toggleHistoryModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+    <!-- 3. RETRIEVAL MANAGEMENT DATABASE MODAL CONSOLE -->
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 z-50">
+        <div class="bg-white/90 backdrop-blur-xl rounded-3xl max-w-2xl w-full p-6 shadow-apple-lg max-h-[80vh] flex flex-col border border-white/20 animate-fade-in">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-4">
+                <h3 class="text-base font-bold text-olive-900">Historical Cloud Repository Archive</h3>
+                <button onclick="toggleHistoryModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
             </div>
-            <div class="overflow-y-auto flex-1 space-y-3" id="history-list">
-                <p class="text-sm text-gray-500 text-center py-8">Fetching old quotes archive...</p>
+            <div class="overflow-y-auto flex-1 space-y-3 pr-1" id="history-list">
+                <p class="text-sm text-gray-400 text-center py-12">Querying archive log sequence...</p>
             </div>
         </div>
     </div>
 
+    <!-- RUNTIME EXECUTION SCRIPTS -->
     <script>
-        // --- 1. CONFIGURATION PATHWAYS ---
-        // Inserted your personal Appwrite variables down here:
+        // Set dynamic date value defaults
+        document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
+
+        // System Variables Configuration Linkage Path mapping
         const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1'; 
         const APPWRITE_PROJECT = 'sgp-6a3ba067000a0cd94dba';
         const DATABASE_ID = 'NurseryDB';
         const COLLECTION_ID = 'Quotations';
 
-        // Set up the internal local state array tracking plants
         let items = [{ particulars: '', qty: 1, amount: 0 }];
 
-        // Initialize the Web Client Engine
         const client = new Appwrite.Client();
         let databases;
-        if(APPWRITE_ENDPOINT !== 'YOUR_APPWRITE_ENDPOINT_HERE') {
+        if(APPWRITE_ENDPOINT) {
             client.setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
             databases = new Appwrite.Databases(client);
         }
 
-        // --- 2. PREMIUM CURSOR DELAY ANIMATION ---
+        // Ghibli Mouse Cloud Parallax Controller Logic
         const loginCard = document.getElementById('login-card');
         const ambientGlow = document.getElementById('ambient-glow');
         
         document.getElementById('login-screen').addEventListener('mousemove', (e) => {
             const { clientX, clientY } = e;
-            // Guide the soft gradient trail behind cursor movement
-            ambientGlow.style.left = `${clientX - 250}px`;
-            ambientGlow.style.top = `${clientY - 250}px`;
+            ambientGlow.style.left = `${clientX - 300}px`;
+            ambientGlow.style.top = `${clientY - 300}px`;
             
-            // Apply slight interactive tilting effect to user interface card
-            const xRotation = ((clientY - window.innerHeight / 2) / window.innerHeight) * 15;
-            const yRotation = ((clientX - window.innerWidth / 2) / window.innerWidth) * -15;
+            const xRotation = ((clientY - window.innerHeight / 2) / window.innerHeight) * 12;
+            const yRotation = ((clientX - window.innerWidth / 2) / window.innerWidth) * -12;
             loginCard.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
         });
 
-        // --- 3. SECURITY GATEWAYS ---
         function handleLogin(e) {
             e.preventDefault();
-            // Secure access credential block (simple custom manager key)
             if(document.getElementById('secret-key').value === '94485') {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 renderFormRows();
                 updateLivePreview();
             } else {
-                alert('Invalid Authentication Key. Please try again.');
+                alert('Invalid Security Passcode.');
             }
         }
 
@@ -234,23 +337,34 @@
             document.getElementById('login-screen').classList.remove('hidden');
         }
 
-        // --- 4. DATA LOGISTICS & LOGIC CONTROLLERS ---
+        function handleTransportToggle() {
+            const isChecked = document.getElementById('toggle-transport').checked;
+            const panel = document.getElementById('transport-input-panel');
+            if (isChecked) {
+                panel.classList.remove('hidden');
+            } else {
+                panel.classList.add('hidden');
+                document.getElementById('transport-cost').value = '0';
+            }
+            updateLivePreview();
+        }
+
         function renderFormRows() {
             const tbody = document.getElementById('plant-rows');
             tbody.innerHTML = items.map((item, index) => `
-                <tr class="border-b border-gray-50">
-                    <td class="py-2 font-medium text-gray-400">${index + 1}</td>
+                <tr>
+                    <td class="py-3 font-semibold text-gray-400">${index + 1}</td>
                     <td class="py-2 pr-2">
-                        <input type="text" value="${item.particulars}" oninput="updateItem(${index}, 'particulars', this.value)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm" placeholder="Mango Plant, Apple Plant...">
+                        <input type="text" value="${item.particulars}" oninput="updateItem(${index}, 'particulars', this.value)" class="w-full px-3 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm" placeholder="e.g. Alphonso Mango Plant">
                     </td>
                     <td class="py-2 pr-2">
-                        <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseInt(this.value) || 0)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm text-center">
+                        <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseInt(this.value) || 0)" class="w-full px-2 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-center font-medium">
                     </td>
                     <td class="py-2 pr-2">
-                        <input type="number" value="${item.amount}" oninput="updateItem(${index}, 'amount', parseFloat(this.value) || 0)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm text-right">
+                        <input type="number" value="${item.amount}" oninput="updateItem(${index}, 'amount', parseFloat(this.value) || 0)" class="w-full px-3 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-right font-medium">
                     </td>
                     <td class="py-2 text-center">
-                        <button onclick="removeRow(${index})" class="text-gray-300 hover:text-crimson-600 font-bold text-base">&times;</button>
+                        <button onclick="removeRow(${index})" class="text-gray-300 hover:text-crimson-600 font-bold text-lg transition-colors">&times;</button>
                     </td>
                 </tr>
             `).join('');
@@ -276,57 +390,86 @@
         }
 
         function updateLivePreview() {
-            // Synchronize Input Fields with clean Preview Screen layout
-            document.getElementById('p-name').innerText = document.getElementById('cust-name').value || 'Customer Name Placeholder';
-            document.getElementById('p-mobile').innerText = document.getElementById('cust-mobile').value || 'Not Disclosed';
-            document.getElementById('preview-date').innerText = `Date: ${new Date().toLocaleDateString('en-IN')}`;
+            // Update Text Nodes
+            document.getElementById('p-name').innerText = document.getElementById('cust-name').value || 'Customer Name Reference';
+            document.getElementById('p-mobile').innerText = document.getElementById('cust-mobile').value || '';
+            document.getElementById('p-address').innerText = document.getElementById('cust-address').value || 'No Delivery Address Specified';
             
-            let total = 0;
+            // Format Editable Date display safely
+            const chosenDate = document.getElementById('cust-date').value;
+            if (chosenDate) {
+                const parts = chosenDate.split('-');
+                document.getElementById('preview-date').innerText = `Date: ${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+
+            let plantsTotal = 0;
             const previewBody = document.getElementById('preview-rows');
             
             previewBody.innerHTML = items.map((item, idx) => {
                 const lineTotal = item.qty * item.amount;
-                total += lineTotal;
+                plantsTotal += lineTotal;
                 return `
-                    <tr class="hover:bg-olive-50/30">
-                        <td class="p-3 text-center text-gray-400 font-medium">${idx + 1}</td>
-                        <td class="p-3 font-medium text-olive-900">${item.particulars || 'Unnamed Plant Entry'}</td>
-                        <td class="p-3 text-center text-gray-600">${item.qty}</td>
-                        <td class="p-3 text-right font-medium text-neutral-900">₹${lineTotal.toFixed(2)}</td>
+                    <tr class="hover:bg-olive-50/50 transition-colors">
+                        <td class="p-3 text-center text-gray-400 font-semibold">${idx + 1}</td>
+                        <td class="p-3 font-semibold text-neutral-900">${item.particulars || 'Unnamed Plant Specimen'}</td>
+                        <td class="p-3 text-center text-gray-600 font-medium">${item.qty}</td>
+                        <td class="p-3 text-right font-semibold text-neutral-900">₹${lineTotal.toFixed(2)}</td>
                     </tr>
                 `;
             }).join('');
             
-            document.getElementById('p-total').innerText = `₹${total.toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+            const transportCheckbox = document.getElementById('toggle-transport').checked;
+            const transportCost = parseFloat(document.getElementById('transport-cost').value) || 0;
+            
+            if(transportCheckbox && transportCost > 0) {
+                document.getElementById('p-subtotal-row').classList.remove('hidden');
+                document.getElementById('p-transport-row').classList.remove('hidden');
+                document.getElementById('p-subtotal').innerText = `₹${plantsTotal.toFixed(2)}`;
+                document.getElementById('p-transport').innerText = `₹${transportCost.toFixed(2)}`;
+                
+                const grandTotal = plantsTotal + transportCost;
+                document.getElementById('p-total').innerText = `₹${grandTotal.toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+            } else {
+                document.getElementById('p-subtotal-row').classList.add('hidden');
+                document.getElementById('p-transport-row').classList.add('hidden');
+                document.getElementById('p-total').innerText = `₹${plantsTotal.toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+            }
         }
 
-        // --- 5. SERVER SYNCHRONIZATION (APPWRITE INTERACTION) ---
         async function saveQuoteToAppwrite() {
-            if(!databases) {
-                alert('Setup Notice: Database engine could not be initialized.');
-                return;
-            }
-            
             const name = document.getElementById('cust-name').value;
             const mobile = document.getElementById('cust-mobile').value;
-            let total = items.reduce((sum, item) => sum + (item.qty * item.amount), 0);
+            const address = document.getElementById('cust-address').value;
+            const rawDate = document.getElementById('cust-date').value;
+            const hasTransport = document.getElementById('toggle-transport').checked;
+            const transportCost = hasTransport ? (parseFloat(document.getElementById('transport-cost').value) || 0) : 0;
+            
+            let plantsTotal = items.reduce((sum, item) => sum + (item.qty * item.amount), 0);
+            const absoluteGrandTotal = plantsTotal + transportCost;
 
             if(!name || !mobile) {
-                alert('Validation Alert: Customer Name and Contact details are required to record quotations.');
+                alert('Please provide customer metrics before synchronizing.');
                 return;
             }
+
+            // Formulate standard structured packing payload text to store custom data points mapping
+            const structuredMetaPayload = {
+                itemsList: items,
+                customDeliveryAddress: address,
+                customQuoteIssuedDate: rawDate,
+                appliedLogisticsCosts: transportCost
+            };
 
             try {
                 await databases.createDocument(DATABASE_ID, COLLECTION_ID, Appwrite.ID.unique(), {
                     customerName: name,
                     mobileNumber: mobile,
-                    plantItems: JSON.stringify(items),
-                    totalAmount: total
+                    plantItems: JSON.stringify(structuredMetaPayload),
+                    totalAmount: absoluteGrandTotal
                 });
-                alert('Success! Quotation safely stored in Appwrite Cloud.');
+                alert('Cloud Synchronization Complete. Record secure.');
             } catch (error) {
-                console.error(error);
-                alert('Database Transmission Failed: ' + error.message);
+                alert('Database Error Connection: ' + error.message);
             }
         }
 
@@ -336,43 +479,67 @@
             
             if(!modal.classList.contains('hidden')) {
                 const listContainer = document.getElementById('history-list');
-                if(!databases) {
-                    listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Database system unlinked.</p>`;
-                    return;
-                }
-                
                 try {
                     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
                     if(response.documents.length === 0) {
-                        listContainer.innerHTML = `<p class="text-sm text-center text-gray-400 py-4">No previous records exist within database archive yet.</p>`;
+                        listContainer.innerHTML = `<p class="text-sm text-center text-gray-400 py-8">No matching logs compiled.</p>`;
                         return;
                     }
                     
                     listContainer.innerHTML = response.documents.map(doc => `
-                        <div class="border border-olive-100 rounded-xl p-4 flex justify-between items-center hover:bg-olive-50/50 transition-colors">
+                        <div class="border border-olive-100 rounded-2xl p-4 flex justify-between items-center bg-white shadow-apple-sm hover:bg-olive-50 transition-all">
                             <div>
-                                <h4 class="font-bold text-olive-800">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
-                                <p class="text-xs text-gray-400 mt-0.5">Recorded on: ${new Date(doc.$createdAt).toLocaleString('en-IN')}</p>
+                                <h4 class="font-bold text-olive-900 text-sm">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Stored Sequence: ${new Date(doc.$createdAt).toLocaleDateString('en-IN')}</p>
                             </div>
                             <div class="text-right flex items-center gap-3">
-                                <span class="font-bold text-crimson-600 text-base">₹${doc.totalAmount}</span>
-                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-3 py-1 bg-olive-700 text-white rounded text-xs font-medium hover:bg-olive-800">Load</button>
+                                <span class="font-bold text-crimson-600 text-sm">₹${doc.totalAmount.toLocaleString('en-IN')}</span>
+                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-3 py-1.5 bg-olive-800 text-white rounded-lg text-xs font-semibold hover:bg-olive-900 transition-colors">Load</button>
                             </div>
                         </div>
                     `).join('');
                 } catch (error) {
-                    listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Error accessing records: ${error.message}</p>`;
+                    listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Read Error: ${error.message}</p>`;
                 }
             }
         }
 
-        function loadHistoricQuote(encodedItems, name, mobile) {
-            items = JSON.parse(atob(encodedItems));
-            document.getElementById('cust-name').value = name;
-            document.getElementById('cust-mobile').value = mobile;
-            renderFormRows();
-            updateLivePreview();
-            toggleHistoryModal();
+        function loadHistoricQuote(base64Payload, name, mobile) {
+            try {
+                const schema = JSON.parse(atob(base64Payload));
+                
+                if (schema.itemsList) {
+                    items = schema.itemsList;
+                    document.getElementById('cust-address').value = schema.customDeliveryAddress || '';
+                    document.getElementById('cust-date').value = schema.customQuoteIssuedDate || new Date().toISOString().split('T')[0];
+                    
+                    if (schema.appliedLogisticsCosts && schema.appliedLogisticsCosts > 0) {
+                        document.getElementById('toggle-transport').checked = true;
+                        document.getElementById('transport-input-panel').classList.remove('hidden');
+                        document.getElementById('transport-cost').value = schema.appliedLogisticsCosts;
+                    } else {
+                        document.getElementById('toggle-transport').checked = false;
+                        document.getElementById('transport-input-panel').classList.add('hidden');
+                        document.getElementById('transport-cost').value = 0;
+                    }
+                } else {
+                    // Fallback to maintain compatibility with legacy basic list storage arrays
+                    items = JSON.parse(atob(base64Payload));
+                    document.getElementById('cust-address').value = '';
+                    document.getElementById('toggle-transport').checked = false;
+                    document.getElementById('transport-input-panel').classList.add('hidden');
+                    document.getElementById('transport-cost').value = 0;
+                }
+
+                document.getElementById('cust-name').value = name;
+                document.getElementById('cust-mobile').value = mobile;
+                
+                renderFormRows();
+                updateLivePreview();
+                toggleHistoryModal();
+            } catch(e) {
+                alert("Failed to unpack quotation matrix structure perfectly.");
+            }
         }
     </script>
 </body>
