@@ -68,9 +68,10 @@
         @media print {
             body { background: #ffffff !important; color: #000000 !important; }
             #dashboard-screen { display: block !important; }
-            main { grid-template-cols: 1fr !important; display: block !important; padding: 0 !important; }
+            main { grid-template-columns: 1fr !important; display: block !important; padding: 0 !important; }
             #print-area { border: none !important; shadow: none !important; width: 100% !important; max-width: 100% !important; height: auto !important; aspect-ratio: auto !important; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
+            .mobile-tabs { display: none !important; }
         }
     </style>
 </head>
@@ -86,13 +87,13 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/90 shadow-apple-md mb-6 border border-white/40">
                 <span class="text-2xl">🌱</span>
             </div>
-            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3 drop-shadow-md">Sri Ragavendra Nursery</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight mb-3 drop-shadow-sm px-2">Sri Ragavendra Nursery</h1>
             <div class="h-[1px] w-24 bg-white/40 mx-auto mb-3"></div>
-            <p class="text-white/90 text-sm md:text-base font-medium tracking-widest uppercase">All Kinds of Fruit plants available</p>
+            <p class="text-white/90 text-xs md:text-base font-medium tracking-widest uppercase">All Kinds of Fruit plants available</p>
         </div>
 
-        <div id="login-card" class="glass-panel w-full max-w-md rounded-3xl p-8 shadow-apple-lg z-10 transition-transform duration-300 ease-out">
-            <h3 class="text-xl font-bold text-olive-900 mb-6 text-center tracking-tight">Studio Gateways</h3>
+        <div id="login-card" class="glass-panel w-full max-w-md rounded-3xl p-6 md:p-8 shadow-apple-lg z-10 transition-transform duration-300 ease-out">
+            <h3 class="text-lg font-bold text-olive-900 mb-6 text-center tracking-tight">Studio Gateways</h3>
             <form id="auth-form" onsubmit="handleLogin(event)" class="space-y-6">
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-widest text-olive-700 mb-2">Passcode Sequence</label>
@@ -106,34 +107,39 @@
     <!-- 2. APPLE WORKSPACE DASHBOARD -->
     <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
         <!-- App Header (No-Print Element) -->
-        <header class="no-print bg-white/80 backdrop-blur-md border-b border-olive-100 px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-40">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-olive-100 flex items-center justify-center text-lg border border-olive-200">🌱</div>
+        <header class="no-print bg-white/85 backdrop-blur-md border-b border-olive-100 px-4 md:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-40">
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="w-10 h-10 rounded-xl bg-olive-100 flex items-center justify-center text-lg border border-olive-200 flex-shrink-0">🌱</div>
                 <div>
-                    <h2 class="text-lg font-bold text-olive-900 tracking-tight">Sri Ragavendra Nursery</h2>
-                    <p class="text-xs text-olive-700/60 font-medium">Internal Digital Engine</p>
+                    <h2 class="text-base md:text-lg font-bold text-olive-900 tracking-tight">Sri Ragavendra Nursery</h2>
+                    <p class="text-[11px] text-olive-700/60 font-medium">Internal Digital Engine</p>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleHistoryModal()" class="px-4 py-2.5 text-xs font-semibold border border-olive-700/20 text-olive-800 bg-white shadow-apple-sm rounded-xl hover:bg-olive-50 transition-all">📄 Pull Archive Data</button>
-                <button onclick="handleLogout()" class="px-4 py-2.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all">Sign Out</button>
+            <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto border-t sm:border-t-0 pt-3 sm:pt-0">
+                <button onclick="toggleHistoryModal()" class="px-3.5 py-2 text-xs font-semibold border border-olive-700/20 text-olive-800 bg-white shadow-apple-sm rounded-xl hover:bg-olive-50 transition-all">📄 Pull Archive</button>
+                <button onclick="handleLogout()" class="px-3.5 py-2 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all">Sign Out</button>
             </div>
         </header>
 
+        <!-- Segmented Tab Switcher for Mobile Screens (No-Print) -->
+        <div class="no-print mobile-tabs lg:hidden bg-olive-100/60 p-1.5 mx-4 mt-4 rounded-xl flex border border-olive-200/40">
+            <button id="tab-form-btn" onclick="switchMobileTab('form')" class="flex-1 py-2 text-xs font-bold text-center rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all">Edit Form</button>
+            <button id="tab-preview-btn" onclick="switchMobileTab('preview')" class="flex-1 py-2 text-xs font-bold text-center rounded-lg text-olive-700/70 transition-all">View PDF Preview</button>
+        </div>
+
         <!-- Main Studio Split Screen Grid Configuration -->
-        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 lg:p-8 max-w-[1600px] w-full mx-auto">
-            <!-- Form Parameters Controller Pane (No-Print Element) -->
-            <div class="no-print bg-white rounded-3xl p-6 shadow-apple-sm border border-olive-100/60 flex flex-col justify-between space-y-6">
+        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 p-4 md:p-6 lg:p-8 max-w-[1600px] w-full mx-auto">
+            
+            <!-- Left Side: Input Form Pane (No-Print) -->
+            <div id="form-pane" class="no-print bg-white rounded-3xl p-5 md:p-6 shadow-apple-sm border border-olive-100/60 flex flex-col justify-between space-y-6">
                 <div class="space-y-6">
-                    <!-- Heading -->
                     <div class="flex justify-between items-center border-b border-gray-100 pb-3">
-                        <h3 class="text-sm font-bold uppercase tracking-wider text-olive-700">1. Quote Meta Information</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-olive-700">1. Quote Meta Information</h3>
                         <div>
-                            <input type="date" id="cust-date" oninput="updateLivePreview()" class="px-3 py-1 bg-olive-50/80 border border-transparent rounded-xl text-xs font-medium text-olive-800 focus:outline-none focus:bg-white focus:border-olive-700">
+                            <input type="date" id="cust-date" oninput="updateLivePreview()" class="px-2.5 py-1.5 bg-olive-50/80 border border-transparent rounded-xl text-xs font-medium text-olive-800 focus:outline-none focus:bg-white focus:border-olive-700">
                         </div>
                     </div>
                     
-                    <!-- Customer Parameters Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-gray-500 mb-1.5">Customer Name</label>
@@ -146,16 +152,15 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 mb-1.5">Custom Address</label>
-                        <textarea id="cust-address" rows="2" oninput="updateLivePreview()" class="apple-input w-full px-4 py-2.5 rounded-xl bg-olive-50/50 border border-gray-100 focus:outline-none text-sm resize-none" placeholder="Enter complete shipping or billing address details..."></textarea>
+                        <textarea id="cust-address" rows="2" oninput="updateLivePreview()" class="apple-input w-full px-4 py-2.5 rounded-xl bg-olive-50/50 border border-gray-100 focus:outline-none text-sm resize-none" placeholder="Enter complete shipping address details..."></textarea>
                     </div>
 
-                    <!-- Plant Matrix Data Entry Spreadsheet layout -->
                     <div class="flex justify-between items-center border-b border-gray-100 pb-2 pt-2">
                         <h3 class="text-sm font-bold uppercase tracking-wider text-olive-700">2. Plant Catalog Rows</h3>
                     </div>
                     
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
+                    <div class="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
+                        <table class="w-full text-left text-xs min-w-[450px]">
                             <thead>
                                 <tr class="text-gray-400 font-bold uppercase tracking-wider border-b border-gray-100">
                                     <th class="pb-2 w-10">S.No</th>
@@ -171,60 +176,58 @@
                         </table>
                     </div>
                     
-                    <button onclick="addNewRow()" class="text-xs font-bold text-olive-700 hover:text-olive-900 flex items-center gap-1.5 bg-olive-50 px-3 py-2 rounded-xl border border-olive-100/50 transition-colors">➕ Add New Plant Entry</button>
+                    <button onclick="addNewRow()" class="text-xs font-bold text-olive-700 hover:text-olive-900 flex items-center gap-1.5 bg-olive-50 px-3 py-2 rounded-xl border border-olive-100/50 transition-colors w-full sm:w-auto justify-center">➕ Add New Plant Entry</button>
                     
-                    <!-- Transport Logic Interface Blocks -->
                     <div class="pt-4 border-t border-gray-100 space-y-4">
-                        <label class="flex items-center gap-3 cursor-pointer group">
+                        <label class="flex items-center gap-3 cursor-pointer group select-none">
                             <input type="checkbox" id="toggle-transport" onchange="handleTransportToggle()" class="w-4 h-4 rounded text-olive-800 border-gray-300 focus:ring-olive-700/20">
                             <span class="text-xs font-bold text-olive-800 group-hover:text-olive-900">Include Transportation & Labour Logistics</span>
                         </label>
                         
                         <div id="transport-input-panel" class="hidden bg-olive-50/60 rounded-2xl p-4 border border-olive-100/50 animate-fade-in">
-                            <label class="block text-xs font-semibold text-gray-500 mb-1.5">Logistics cost allocation value (₹)</label>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1.5">Logistics cost value (₹)</label>
                             <input type="number" id="transport-cost" value="0" oninput="updateLivePreview()" class="apple-input w-full max-w-xs px-4 py-2.5 rounded-xl bg-white border border-gray-200 focus:outline-none text-sm text-right font-medium" placeholder="0.00">
                         </div>
                     </div>
                 </div>
 
-                <!-- Footer Console CTA Controls -->
-                <div class="pt-6 border-t border-gray-100 flex justify-between items-center gap-4">
-                    <button onclick="saveQuoteToAppwrite()" class="px-5 py-3 bg-white border border-olive-700/30 hover:border-olive-800 text-olive-800 font-semibold text-xs rounded-xl shadow-apple-sm transition-all transform active:scale-[0.98]">Sync Server Archive</button>
-                    <button onclick="window.print()" class="px-6 py-3 bg-crimson-600 hover:bg-crimson-700 text-white font-semibold text-xs rounded-xl shadow-apple-sm transition-all transform active:scale-[0.98] flex items-center gap-2">
+                <div class="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-3">
+                    <button onclick="saveQuoteToAppwrite()" class="w-full sm:w-auto px-5 py-3 bg-white border border-olive-700/30 hover:border-olive-800 text-olive-800 font-semibold text-xs rounded-xl shadow-apple-sm transition-all text-center">Sync Server Archive</button>
+                    <button onclick="window.print()" class="w-full sm:w-auto px-6 py-3 bg-crimson-600 hover:bg-crimson-700 text-white font-semibold text-xs rounded-xl shadow-apple-sm transition-all flex items-center justify-center gap-2">
                         <span>📥 Export Premium Invoice PDF</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Right Side: Beautiful Clean Apple Document Sheet Preview Template Canvas -->
-            <div id="print-area" class="bg-white rounded-3xl p-10 shadow-apple-md border border-gray-100 flex flex-col justify-between aspect-[1/1.414] text-neutral-800 transition-all">
-                <div>
+            <!-- Right Side: Clean Apple Canvas Sheet Preview (Hidden on mobile by default via tab state) -->
+            <div id="preview-pane" class="hidden lg:flex bg-white rounded-3xl p-5 md:p-10 shadow-apple-md border border-gray-100 flex-col justify-between aspect-[1/1.414] lg:aspect-auto xl:aspect-[1/1.414] text-neutral-800 transition-all overflow-x-auto">
+                <div class="min-w-[500px] lg:min-w-0">
                     <!-- Document Invoice Design Header Frame -->
-                    <div class="flex justify-between items-start border-b-2 border-olive-800/10 pb-8 mb-6">
-                        <div class="flex gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-olive-800 text-white flex items-center justify-center text-2xl shadow-apple-sm">🌱</div>
+                    <div class="flex justify-between items-start border-b-2 border-olive-800/10 pb-6 mb-6">
+                        <div class="flex gap-3 md:gap-4">
+                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-olive-800 text-white flex items-center justify-center text-xl md:text-2xl shadow-apple-sm">🌱</div>
                             <div>
-                                <h1 class="text-xl font-bold text-olive-800 tracking-tight leading-none">SRI RAGAVENDRA NURSERY</h1>
-                                <p class="text-[10px] text-olive-700 font-bold tracking-widest uppercase mt-2">All Kinds of Fruit plants available</p>
-                                <p class="text-[11px] text-gray-500 font-medium mt-1">📱 +91 9448515060 | +91 8892689595</p>
+                                <h1 class="text-base md:text-xl font-bold text-olive-800 tracking-tight leading-none">SRI RAGAVENDRA NURSERY</h1>
+                                <p class="text-[9px] md:text-[10px] text-olive-700 font-bold tracking-widest uppercase mt-2">All Kinds of Fruit plants available</p>
+                                <p class="text-[10px] md:text-[11px] text-gray-500 font-medium mt-1">📱 +91 9448515060 | +91 8892689595</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <h2 class="text-base font-bold text-crimson-600 tracking-widest uppercase">Quotation</h2>
-                            <p class="text-xs font-semibold text-neutral-900 mt-2" id="preview-date">Date: --/--/----</p>
+                            <h2 class="text-xs md:text-base font-bold text-crimson-600 tracking-widest uppercase">Quotation</h2>
+                            <p class="text-[11px] font-bold text-neutral-900 mt-2" id="preview-date">Date: --/--/----</p>
                         </div>
                     </div>
 
                     <!-- Client Target Metadata Profile Layout Block -->
-                    <div class="grid grid-cols-3 gap-6 text-xs border-b border-gray-100 pb-6 mb-6">
+                    <div class="grid grid-cols-3 gap-4 md:gap-6 text-xs border-b border-gray-100 pb-6 mb-6">
                         <div class="col-span-1">
                             <p class="text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Prepared For</p>
-                            <p id="p-name" class="font-bold text-sm text-neutral-900">-</p>
+                            <p id="p-name" class="font-bold text-sm text-neutral-900 break-words">-</p>
                             <p id="p-mobile" class="font-semibold text-gray-500 mt-0.5">-</p>
                         </div>
-                        <div class="col-span-2 border-l border-gray-100 pl-6">
+                        <div class="col-span-2 border-l border-gray-100 pl-4 md:pl-6">
                             <p class="text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Delivery Destination Address</p>
-                            <p id="p-address" class="font-medium text-neutral-700 whitespace-pre-wrap leading-relaxed">-</p>
+                            <p id="p-address" class="font-medium text-neutral-700 whitespace-pre-wrap leading-relaxed break-words">-</p>
                         </div>
                     </div>
 
@@ -245,26 +248,24 @@
                 </div>
 
                 <!-- Aggregated Financial Calculations Stack Panel Block -->
-                <div class="border-t border-neutral-200/60 pt-6 mt-6 flex justify-between items-end">
+                <div class="border-t border-neutral-200/60 pt-6 mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                     <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs">
                         <p class="font-semibold text-neutral-500">Notice Rules Statement</p>
                         <p class="mt-0.5">Thank you for evaluating our inventory. Estimates are subject to field stock limitations and price flux.</p>
                     </div>
                     
-                    <div class="w-64 space-y-2 text-xs">
-                        <!-- Conditional Plant total row -->
+                    <div class="w-full sm:w-64 space-y-2 text-xs ml-auto">
                         <div id="p-subtotal-row" class="hidden flex justify-between text-gray-500 font-medium">
                             <span>Plants Total Cost:</span>
                             <span id="p-subtotal">₹0.00</span>
                         </div>
-                        <!-- Conditional Logistics Allocation row -->
                         <div id="p-transport-row" class="hidden flex justify-between text-gray-500 font-medium">
                             <span>Transport & Labour:</span>
                             <span id="p-transport">₹0.00</span>
                         </div>
                         <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-200">
                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Grand Net Total</span>
-                            <span id="p-total" class="text-2xl font-bold text-crimson-600 tracking-tight">₹0.00</span>
+                            <span id="p-total" class="text-xl md:text-2xl font-bold text-crimson-600 tracking-tight">₹0.00</span>
                         </div>
                     </div>
                 </div>
@@ -274,7 +275,7 @@
 
     <!-- 3. RETRIEVAL MANAGEMENT DATABASE MODAL CONSOLE -->
     <div id="history-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 z-50">
-        <div class="bg-white/90 backdrop-blur-xl rounded-3xl max-w-2xl w-full p-6 shadow-apple-lg max-h-[80vh] flex flex-col border border-white/20 animate-fade-in">
+        <div class="bg-white/90 backdrop-blur-xl rounded-3xl max-w-2xl w-full p-5 md:p-6 shadow-apple-lg max-h-[80vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-4">
                 <h3 class="text-base font-bold text-olive-900">Historical Cloud Repository Archive</h3>
                 <button onclick="toggleHistoryModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
@@ -287,7 +288,6 @@
 
     <!-- RUNTIME EXECUTION SCRIPTS -->
     <script>
-        // Set dynamic date value defaults
         document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
 
         // System Variables Configuration Linkage Path mapping
@@ -337,6 +337,28 @@
             document.getElementById('login-screen').classList.remove('hidden');
         }
 
+        // Mobile View Controller Swapping Engine
+        function switchMobileTab(target) {
+            const formBtn = document.getElementById('tab-form-btn');
+            const previewBtn = document.getElementById('tab-preview-btn');
+            const formPane = document.getElementById('form-pane');
+            const previewPane = document.getElementById('preview-pane');
+
+            if (target === 'form') {
+                formBtn.className = "flex-1 py-2 text-xs font-bold text-center rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all";
+                previewBtn.className = "flex-1 py-2 text-xs font-bold text-center rounded-lg text-olive-700/70 transition-all";
+                formPane.classList.remove('hidden');
+                previewPane.classList.add('hidden');
+                previewPane.classList.remove('flex');
+            } else {
+                previewBtn.className = "flex-1 py-2 text-xs font-bold text-center rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all";
+                formBtn.className = "flex-1 py-2 text-xs font-bold text-center rounded-lg text-olive-700/70 transition-all";
+                formPane.classList.add('hidden');
+                previewPane.classList.remove('hidden');
+                previewPane.classList.add('flex');
+            }
+        }
+
         function handleTransportToggle() {
             const isChecked = document.getElementById('toggle-transport').checked;
             const panel = document.getElementById('transport-input-panel');
@@ -355,13 +377,13 @@
                 <tr>
                     <td class="py-3 font-semibold text-gray-400">${index + 1}</td>
                     <td class="py-2 pr-2">
-                        <input type="text" value="${item.particulars}" oninput="updateItem(${index}, 'particulars', this.value)" class="w-full px-3 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm" placeholder="e.g. Alphonso Mango Plant">
+                        <input type="text" value="${item.particulars}" oninput="updateItem(${index}, 'particulars', this.value)" class="w-full px-3 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm" placeholder="e.g. Alphonso Mango">
                     </td>
                     <td class="py-2 pr-2">
-                        <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseInt(this.value) || 0)" class="w-full px-2 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-center font-medium">
+                        <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseInt(this.value) || 0)" class="w-full px-1 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-center font-medium">
                     </td>
                     <td class="py-2 pr-2">
-                        <input type="number" value="${item.amount}" oninput="updateItem(${index}, 'amount', parseFloat(this.value) || 0)" class="w-full px-3 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-right font-medium">
+                        <input type="number" value="${item.amount}" oninput="updateItem(${index}, 'amount', parseFloat(this.value) || 0)" class="w-full px-2 py-1.5 bg-olive-50/50 border border-transparent rounded-xl focus:bg-white focus:border-olive-700 text-sm text-right font-medium">
                     </td>
                     <td class="py-2 text-center">
                         <button onclick="removeRow(${index})" class="text-gray-300 hover:text-crimson-600 font-bold text-lg transition-colors">&times;</button>
@@ -390,12 +412,10 @@
         }
 
         function updateLivePreview() {
-            // Update Text Nodes
             document.getElementById('p-name').innerText = document.getElementById('cust-name').value || 'Customer Name Reference';
             document.getElementById('p-mobile').innerText = document.getElementById('cust-mobile').value || '';
             document.getElementById('p-address').innerText = document.getElementById('cust-address').value || 'No Delivery Address Specified';
             
-            // Format Editable Date display safely
             const chosenDate = document.getElementById('cust-date').value;
             if (chosenDate) {
                 const parts = chosenDate.split('-');
@@ -452,7 +472,6 @@
                 return;
             }
 
-            // Formulate standard structured packing payload text to store custom data points mapping
             const structuredMetaPayload = {
                 itemsList: items,
                 customDeliveryAddress: address,
@@ -488,13 +507,13 @@
                     
                     listContainer.innerHTML = response.documents.map(doc => `
                         <div class="border border-olive-100 rounded-2xl p-4 flex justify-between items-center bg-white shadow-apple-sm hover:bg-olive-50 transition-all">
-                            <div>
-                                <h4 class="font-bold text-olive-900 text-sm">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
+                            <div class="pr-2 min-w-0 flex-1">
+                                <h4 class="font-bold text-olive-900 text-sm truncate">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
                                 <p class="text-[11px] text-gray-400 mt-0.5">Stored Sequence: ${new Date(doc.$createdAt).toLocaleDateString('en-IN')}</p>
                             </div>
-                            <div class="text-right flex items-center gap-3">
-                                <span class="font-bold text-crimson-600 text-sm">₹${doc.totalAmount.toLocaleString('en-IN')}</span>
-                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-3 py-1.5 bg-olive-800 text-white rounded-lg text-xs font-semibold hover:bg-olive-900 transition-colors">Load</button>
+                            <div class="text-right flex items-center gap-2 flex-shrink-0">
+                                <span class="font-bold text-crimson-600 text-xs sm:text-sm">₹${doc.totalAmount.toLocaleString('en-IN')}</span>
+                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-2.5 py-1.5 bg-olive-800 text-white rounded-lg text-xs font-semibold hover:bg-olive-900">Load</button>
                             </div>
                         </div>
                     `).join('');
@@ -523,7 +542,6 @@
                         document.getElementById('transport-cost').value = 0;
                     }
                 } else {
-                    // Fallback to maintain compatibility with legacy basic list storage arrays
                     items = JSON.parse(atob(base64Payload));
                     document.getElementById('cust-address').value = '';
                     document.getElementById('toggle-transport').checked = false;
@@ -537,6 +555,11 @@
                 renderFormRows();
                 updateLivePreview();
                 toggleHistoryModal();
+                
+                // Automatically bounce mobile users to view the loaded preview sheet
+                if(window.innerWidth < 1024) {
+                    switchMobileTab('preview');
+                }
             } catch(e) {
                 alert("Failed to unpack quotation matrix structure perfectly.");
             }
