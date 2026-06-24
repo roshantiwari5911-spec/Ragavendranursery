@@ -133,9 +133,13 @@
             
             <div id="form-pane" class="no-print bg-white rounded-3xl p-5 md:p-6 shadow-apple-sm border border-olive-100/60 flex flex-col justify-between space-y-6">
                 <div class="space-y-6">
-                    <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-3 gap-3">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-olive-700">1. Quote Meta Information</h3>
-                        <div>
+                        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                            <div class="bg-olive-100/80 p-0.5 rounded-xl flex border border-olive-200/40 select-none">
+                                <button type="button" id="doc-type-quote" onclick="setDocType('quotation')" class="px-3 py-1 text-xs font-bold rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all">Quotation</button>
+                                <button type="button" id="doc-type-bill" onclick="setDocType('bill')" class="px-3 py-1 text-xs font-bold rounded-lg text-olive-700/60 transition-all">Bill</button>
+                            </div>
                             <input type="date" id="cust-date" oninput="updateLivePreview()" class="px-2.5 py-1.5 bg-olive-50/80 border border-transparent rounded-xl text-xs font-medium text-olive-800 focus:outline-none focus:bg-white focus:border-olive-700">
                         </div>
                     </div>
@@ -217,7 +221,7 @@
                                 </div>
                             </div>
                             <div class="text-right">
-                                <h2 class="text-xs md:text-base font-bold text-crimson-600 tracking-widest uppercase">Quotation</h2>
+                                <h2 id="p-doc-title" class="text-xs md:text-base font-bold text-crimson-600 tracking-widest uppercase">Quotation</h2>
                                 <p class="text-[11px] font-bold text-neutral-900 mt-2" id="preview-date">Date: --/--/----</p>
                             </div>
                         </div>
@@ -250,10 +254,7 @@
 
                     <div class="mt-8 space-y-6">
                         <div class="border-t border-neutral-200/60 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-                            <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs">
-                                <p class="font-semibold text-neutral-500">Notice Rules Statement</p>
-                                <p class="mt-0.5">Thank you for evaluating our inventory. Estimates are subject to field stock limitations and price flux.</p>
-                            </div>
+                            <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs"></div>
                             
                             <div class="w-full sm:w-64 space-y-2 text-xs ml-auto">
                                 <div id="p-subtotal-row" class="hidden flex justify-between text-gray-500 font-medium">
@@ -271,12 +272,14 @@
                             </div>
                         </div>
 
-                        <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left text-[11px] text-gray-500 font-medium gap-2">
+                        <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left text-[11px] text-gray-500 font-medium gap-4">
                             <div>
-                                <p class="font-bold text-neutral-800">Sri Ragavendra Nursery</p>
-                                <p class="text-[10px] text-gray-400">Proprietor Contact: +91 9448515060 | ragavendranursery@gmail.com</p>
+                                <p class="font-bold text-neutral-800 text-xs tracking-tight">Sri Ragavendra Nursery</p>
+                                <p class="text-[10px] text-neutral-600 font-medium mt-0.5">Proprietor - D. Magendiran</p>
+                                <p class="text-[10px] text-gray-400 mt-0.5">Contact: +91 9448515060 | +91 8892689595</p>
+                                <p class="text-[10px] text-gray-400">Email: ragavendranursery@gmail.com</p>
                             </div>
-                            <div class="bg-olive-100/50 border border-olive-200/30 rounded-xl px-4 py-2 text-olive-800 flex items-center gap-1.5">
+                            <div class="bg-olive-100/50 border border-olive-200/30 rounded-xl px-4 py-2 text-olive-800 flex items-center gap-1.5 flex-shrink-0">
                                 <span>🖥️</span>
                                 <span>This is a computer-generated Quotation/Bill. Signature is not required.</span>
                             </div>
@@ -300,6 +303,9 @@
     </div>
 
     <script>
+        // Global document context operational state configuration flag variable tracking mapping mapping
+        let currentDocType = 'quotation';
+
         // CORE LIFECYCLE RUNTIME CHECK: Persistent Login Sticky Note Verification
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
@@ -358,6 +364,22 @@
             document.getElementById('secret-key').value = '';
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
+        }
+
+        // CONTROL SLIDER FOR SWITCHING DOCUMENT TYPES VISUALLY AND FUNCTIONALLY
+        function setDocType(type) {
+            currentDocType = type;
+            const quoteBtn = document.getElementById('doc-type-quote');
+            const billBtn = document.getElementById('doc-type-bill');
+            
+            if(type === 'quotation') {
+                quoteBtn.className = "px-3 py-1 text-xs font-bold rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all";
+                billBtn.className = "px-3 py-1 text-xs font-bold rounded-lg text-olive-700/60 transition-all";
+            } else {
+                billBtn.className = "px-3 py-1 text-xs font-bold rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all";
+                quoteBtn.className = "px-3 py-1 text-xs font-bold rounded-lg text-olive-700/60 transition-all";
+            }
+            updateLivePreview();
         }
 
         function switchMobileTab(target) {
@@ -438,6 +460,9 @@
             document.getElementById('p-mobile').innerText = document.getElementById('cust-mobile').value || '';
             document.getElementById('p-address').innerText = document.getElementById('cust-address').value || 'No Delivery Address Specified';
             
+            // Toggle preview sheet document layout titles text strings
+            document.getElementById('p-doc-title').innerText = currentDocType === 'bill' ? 'INVOICE' : 'QUOTATION';
+
             const chosenDate = document.getElementById('cust-date').value;
             if (chosenDate) {
                 const parts = chosenDate.split('-');
@@ -490,10 +515,12 @@
                 dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
             }
 
+            const activeTextLabel = currentDocType === 'bill' ? 'INVOICE SUMMARY' : 'QUOTATION SUMMARY';
+
             let message = `🌿 *SRI RAGAVENDRA NURSERY* 🌿\n`;
             message += `_All Kinds of Fruit plants available_\n`;
             message += `----------------------------------------\n`;
-            message += `*QUOTATION SUMMARY*\n`;
+            message += `*${activeTextLabel}*\n`;
             message += `📅 *Date:* ${dateStr}\n`;
             message += `👤 *Customer:* ${name}\n`;
             if(mobile) message += `📞 *Mobile:* ${mobile}\n`;
@@ -524,7 +551,10 @@
             }
             
             message += `\n----------------------------------------\n`;
-            message += `🖥️ _This is a computer-generated Quotation/Bill. Signature is not required._\n`;
+            message += `✍️ *Sri Ragavendra Nursery*\n`;
+            message += `Proprietor - D. Magendiran\n`;
+            message += `📞 +91 9448515060 | +91 8892689595\n`;
+            message += `✉️ ragavendranursery@gmail.com\n`;
             message += `----------------------------------------\n`;
             message += `🙏 _Thank you for shopping with us!_`;
 
@@ -553,7 +583,8 @@
                 itemsList: items,
                 customDeliveryAddress: address,
                 customQuoteIssuedDate: rawDate,
-                appliedLogisticsCosts: transportCost
+                appliedLogisticsCosts: transportCost,
+                savedDocType: currentDocType // Encodes doc category parameters securely into db
             };
 
             try {
@@ -582,18 +613,28 @@
                         return;
                     }
                     
-                    listContainer.innerHTML = response.documents.map(doc => `
-                        <div class="border border-olive-100 rounded-2xl p-4 flex justify-between items-center bg-white shadow-apple-sm hover:bg-olive-50 transition-all">
-                            <div class="pr-2 min-w-0 flex-1">
-                                <h4 class="font-bold text-olive-900 text-sm truncate">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Stored Sequence: ${new Date(doc.$createdAt).toLocaleDateString('en-IN')}</p>
+                    listContainer.innerHTML = response.documents.map(doc => {
+                        let parsedSchema = {};
+                        try { parsedSchema = JSON.parse(doc.plantItems); } catch(e){}
+                        const typeTag = parsedSchema.savedDocType === 'bill' ? '🧾 Bill' : '📄 Quote';
+                        
+                        return `
+                            <div class="border border-olive-100 rounded-2xl p-4 flex justify-between items-center bg-white shadow-apple-sm hover:bg-olive-50 transition-all">
+                                <div class="pr-2 min-w-0 flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="font-bold text-olive-900 text-sm truncate">${doc.customerName}</h4>
+                                        <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${parsedSchema.savedDocType === 'bill' ? 'bg-amber-100 text-amber-800' : 'bg-olive-100 text-olive-800'}">${typeTag}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-0.5">📞 ${doc.mobileNumber}</p>
+                                    <p class="text-[11px] text-gray-400 mt-0.5">Stored Sequence: ${new Date(doc.$createdAt).toLocaleDateString('en-IN')}</p>
+                                </div>
+                                <div class="text-right flex items-center gap-2 flex-shrink-0">
+                                    <span class="font-bold text-crimson-600 text-xs sm:text-sm">₹${doc.totalAmount.toLocaleString('en-IN')}</span>
+                                    <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-2.5 py-1.5 bg-olive-800 text-white rounded-lg text-xs font-semibold hover:bg-olive-900">Load</button>
+                                </div>
                             </div>
-                            <div class="text-right flex items-center gap-2 flex-shrink-0">
-                                <span class="font-bold text-crimson-600 text-xs sm:text-sm">₹${doc.totalAmount.toLocaleString('en-IN')}</span>
-                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-2.5 py-1.5 bg-olive-800 text-white rounded-lg text-xs font-semibold hover:bg-olive-900">Load</button>
-                            </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 } catch (error) {
                     listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Read Error: ${error.message}</p>`;
                 }
@@ -609,6 +650,13 @@
                     document.getElementById('cust-address').value = schema.customDeliveryAddress || '';
                     document.getElementById('cust-date').value = schema.customQuoteIssuedDate || new Date().toISOString().split('T')[0];
                     
+                    // Restore active switcher flag state configuration
+                    if (schema.savedDocType) {
+                        setDocType(schema.savedDocType);
+                    } else {
+                        setDocType('quotation');
+                    }
+
                     if (schema.appliedLogisticsCosts && schema.appliedLogisticsCosts > 0) {
                         document.getElementById('toggle-transport').checked = true;
                         document.getElementById('transport-input-panel').classList.remove('hidden');
@@ -624,6 +672,7 @@
                     document.getElementById('toggle-transport').checked = false;
                     document.getElementById('transport-input-panel').classList.add('hidden');
                     document.getElementById('transport-cost').value = 0;
+                    setDocType('quotation');
                 }
 
                 document.getElementById('cust-name').value = name;
