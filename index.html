@@ -63,7 +63,7 @@
             box-shadow: 0 0 0 4px rgba(67, 83, 70, 0.1);
         }
         
-        /* ULTIMATE FIX FOR PRINT CONTROLLERS */
+        /* PRINT LOGIC CONTROLLERS */
         @media print {
             body { background: #ffffff !important; color: #000000 !important; min-height: auto !important; padding: 0 !important; margin: 0 !important; }
             .no-print, .mobile-tabs, header { display: none !important; }
@@ -307,7 +307,20 @@
     </div>
 
     <script>
-        document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
+        // CORE LIFECYCLE RUNTIME CHECK: Run as soon as the window loads to check sticky note status
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
+            
+            // Check browser sticky memory note
+            const loginStatus = localStorage.getItem('nursery_logged_in');
+            if (loginStatus === 'true') {
+                // If sticky memory note is present, skip the login wall instantly
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                renderFormRows();
+                updateLivePreview();
+            }
+        });
 
         const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1'; 
         const APPWRITE_PROJECT = 'sgp-6a3ba067000a0cd94dba';
@@ -339,6 +352,9 @@
         function handleLogin(e) {
             e.preventDefault();
             if(document.getElementById('secret-key').value === '94485') {
+                // Set sticky note memory flag
+                localStorage.setItem('nursery_logged_in', 'true');
+                
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 renderFormRows();
@@ -349,6 +365,9 @@
         }
 
         function handleLogout() {
+            // Delete sticky note memory flag
+            localStorage.removeItem('nursery_logged_in');
+            
             document.getElementById('secret-key').value = '';
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
