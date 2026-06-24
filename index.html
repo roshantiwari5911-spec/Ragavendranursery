@@ -36,7 +36,7 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
         
         /* Ghibli Ambient Backdrop Magic */
@@ -191,7 +191,7 @@
                     </div>
                 </div>
 
-                <!-- Footer Console Control Rows (Split into two lines dynamically for mobile) -->
+                <!-- Footer Console Control Rows -->
                 <div class="pt-6 border-t border-gray-100 flex flex-col gap-3">
                     <button onclick="shareOnWhatsApp()" class="w-full px-6 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm rounded-xl shadow-apple-sm transition-all flex items-center justify-center gap-2">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.66.986 3.288 1.498 4.76 1.499 5.379 0 9.761-4.35 9.763-9.688.001-2.586-1.002-5.017-2.826-6.841C16.462 2.296 14.043 1.293 11.47 1.293c-5.385 0-9.766 4.352-9.769 9.69-.001 2.03.535 4.01 1.549 5.722l-.1.173-1.01 3.691 3.785-.992.179.106zm13.125-7.605c-.14-.234-.515-.375-1.077-.656-.562-.281-3.33-1.641-3.844-1.828-.514-.187-.889-.281-1.264.281-.375.562-1.453 1.828-1.781 2.203-.328.375-.656.422-1.219.14-.563-.281-2.377-.875-4.527-2.795-1.673-1.492-2.797-3.335-3.125-3.897-.328-.562-.035-.867.246-1.147.254-.252.563-.656.844-.984.281-.328.375-.563.563-.938.188-.375.094-.703-.047-.984-.14-.281-1.264-3.047-1.734-4.172-.458-1.099-.924-1.031-1.264-1.031-.328-.001-.703-.002-1.078-.002-.375 0-.984.141-1.499.703-.515.563-1.969 1.922-1.969 4.688 0 2.766 2.016 5.437 2.297 5.813.281.375 3.969 6.06 9.625 8.494 1.345.579 2.395.925 3.216 1.185 1.352.43 2.582.369 3.555.224 1.085-.162 3.33-1.359 3.798-2.672.469-1.313.469-2.438.328-2.672z"/></svg>
@@ -206,7 +206,7 @@
                 </div>
             </div>
 
-            <!-- Right Side: Clean Apple Canvas Sheet Preview (Hidden on mobile by default via tab state) -->
+            <!-- Right Side: Clean Apple Canvas Sheet Preview -->
             <div id="preview-pane" class="hidden lg:flex bg-white rounded-3xl p-5 md:p-10 shadow-apple-md border border-gray-100 flex-col justify-between aspect-[1/1.414] lg:aspect-auto xl:aspect-[1/1.414] text-neutral-800 transition-all overflow-x-auto">
                 <div class="min-w-[500px] lg:min-w-0">
                     <!-- Document Invoice Design Header Frame -->
@@ -254,25 +254,41 @@
                     </table>
                 </div>
 
-                <!-- Aggregate Total Summary Block -->
-                <div class="border-t border-neutral-200/60 pt-6 mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-                    <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs">
-                        <p class="font-semibold text-neutral-500">Notice Rules Statement</p>
-                        <p class="mt-0.5">Thank you for evaluating our inventory. Estimates are subject to field stock limitations and price flux.</p>
+                <!-- Bottom Document Summary Block including Totals and Signature Info -->
+                <div class="mt-8 space-y-6">
+                    <!-- Dynamic Financial Calculations Panel -->
+                    <div class="border-t border-neutral-200/60 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                        <div class="text-[11px] text-gray-400 leading-relaxed max-w-xs">
+                            <p class="font-semibold text-neutral-500">Notice Rules Statement</p>
+                            <p class="mt-0.5">Thank you for evaluating our inventory. Estimates are subject to field stock limitations and price flux.</p>
+                        </div>
+                        
+                        <div class="w-full sm:w-64 space-y-2 text-xs ml-auto">
+                            <div id="p-subtotal-row" class="hidden flex justify-between text-gray-500 font-medium">
+                                <span>Plants Total Cost:</span>
+                                <span id="p-subtotal">₹0.00</span>
+                            </div>
+                            <div id="p-transport-row" class="hidden flex justify-between text-gray-500 font-medium">
+                                <span>Transport & Labour:</span>
+                                <span id="p-transport">₹0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-200">
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Grand Net Total</span>
+                                <span id="p-total" class="text-xl md:text-2xl font-bold text-crimson-600 tracking-tight">₹0.00</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="w-full sm:w-64 space-y-2 text-xs ml-auto">
-                        <div id="p-subtotal-row" class="hidden flex justify-between text-gray-500 font-medium">
-                            <span>Plants Total Cost:</span>
-                            <span id="p-subtotal">₹0.00</span>
-                        </div>
-                        <div id="p-transport-row" class="hidden flex justify-between text-gray-500 font-medium">
-                            <span>Transport & Labour:</span>
-                            <span id="p-transport">₹0.00</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-200">
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Grand Net Total</span>
-                            <span id="p-total" class="text-xl md:text-2xl font-bold text-crimson-600 tracking-tight">₹0.00</span>
+
+                    <!-- Verified Owner Signature Section Frame -->
+                    <div class="flex justify-end pt-4">
+                        <div class="w-56 text-right flex flex-col items-end">
+                            <span class="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-2">Authorized Signatory</span>
+                            <!-- Embedded lightweight custom e-signature asset mapping directly from Magendiran signature.png -->
+                            <img src="data:image/png;base64,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" alt="D. Magendiran Official Signature" class="w-36 h-auto border-b border-gray-200 pb-1 mb-1 block mix-blend-multiply">
+                            <span class="text-xs font-bold text-neutral-900 block tracking-tight">D. Magendiran</span>
+                            <span class="text-[11px] font-semibold text-gray-500 block leading-tight">Proprietor</span>
+                            <span class="text-[10px] text-gray-400 block mt-1">+91 9448515060</span>
+                            <span class="text-[10px] text-gray-400 block leading-tight">ragavendranursery@gmail.com</span>
                         </div>
                     </div>
                 </div>
@@ -463,7 +479,6 @@
             }
         }
 
-        // WhatsApp Custom Message Text Generation Engine
         function shareOnWhatsApp() {
             const name = document.getElementById('cust-name').value || 'Valued Customer';
             const mobile = document.getElementById('cust-mobile').value || '';
@@ -476,7 +491,6 @@
                 dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
             }
 
-            // Build out a beautiful structural text format with clean styling emojis
             let message = `🌿 *SRI RAGAVENDRA NURSERY* 🌿\n`;
             message += `_All Kinds of Fruit plants available_\n`;
             message += `----------------------------------------\n`;
@@ -510,14 +524,16 @@
                 message += `💰 *Grand Net Total:* *₹${plantsTotal.toFixed(2)}*\n`;
             }
             
+            message += `\n----------------------------------------\n`;
+            message += `✍️ *Authorized Signatory:*\n`;
+            message += `D. Magendiran (Proprietor)\n`;
+            message += `📞 +91 9448515060\n`;
+            message += `✉️ ragavendranursery@gmail.com\n`;
             message += `----------------------------------------\n`;
             message += `🙏 _Thank you for shopping with us!_`;
 
-            // Properly secure spaces and symbols for direct browser link handoff
             const encodedText = encodeURIComponent(message);
             const whatsappURL = `https://api.whatsapp.com/send?text=${encodedText}`;
-            
-            // Instantly route to mobile browser native app application drawer gateway hooks
             window.open(whatsappURL, '_blank');
         }
 
@@ -621,7 +637,6 @@
                 updateLivePreview();
                 toggleHistoryModal();
                 
-                // Automatically bounce mobile users to view the loaded preview sheet
                 if(window.innerWidth < 1024) {
                     switchMobileTab('preview');
                 }
