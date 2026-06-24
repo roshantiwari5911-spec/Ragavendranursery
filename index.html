@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sri Ragavendra Nursery - Premium Studio</title>
-    <!-- Tailwind CSS for Ultra-Premium Apple Styling -->
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Nursery Studio">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Appwrite Web SDK -->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
     <script>
         tailwind.config = {
@@ -87,7 +90,6 @@
 </head>
 <body class="bg-olive-50 text-olive-900 min-h-screen">
 
-    <!-- 1. GHIBLI ARTWORK INTERACTIVE LOGIN PORTAL -->
     <div id="login-screen" class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden ghibli-bg px-4">
         <div id="ambient-glow" class="absolute w-[600px] h-[600px] rounded-full bg-yellow-100/20 blur-[100px] pointer-events-none transition-all duration-500 ease-out"></div>
         
@@ -112,9 +114,7 @@
         </div>
     </div>
 
-    <!-- 2. APPLE WORKSPACE DASHBOARD -->
     <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
-        <!-- App Header (No-Print) -->
         <header class="no-print bg-white/85 backdrop-blur-md border-b border-olive-100 px-4 md:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-40">
             <div class="flex items-center gap-3 w-full sm:w-auto">
                 <div class="w-10 h-10 rounded-xl bg-olive-100 flex items-center justify-center text-lg border border-olive-200 flex-shrink-0">🌱</div>
@@ -129,16 +129,13 @@
             </div>
         </header>
 
-        <!-- Segmented Tab Switcher for Mobile (No-Print) -->
         <div class="no-print mobile-tabs lg:hidden bg-olive-100/60 p-1.5 mx-4 mt-4 rounded-xl flex border border-olive-200/40">
             <button id="tab-form-btn" onclick="switchMobileTab('form')" class="flex-1 py-2 text-xs font-bold text-center rounded-lg bg-white shadow-apple-sm text-olive-900 transition-all">Edit Form</button>
             <button id="tab-preview-btn" onclick="switchMobileTab('preview')" class="flex-1 py-2 text-xs font-bold text-center rounded-lg text-olive-700/70 transition-all">View PDF Preview</button>
         </div>
 
-        <!-- Main Studio Split Screen Grid Configuration -->
         <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 p-4 md:p-6 lg:p-8 max-w-[1600px] w-full mx-auto">
             
-            <!-- Left Side: Input Form Pane (No-Print) -->
             <div id="form-pane" class="no-print bg-white rounded-3xl p-5 md:p-6 shadow-apple-sm border border-olive-100/60 flex flex-col justify-between space-y-6">
                 <div class="space-y-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-3 gap-3">
@@ -208,7 +205,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Console Controls: Refactored Side-by-Side Setup -->
                 <div class="pt-6 border-t border-gray-100 flex flex-col gap-3">
                     <button onclick="shareOnWhatsApp()" class="w-full px-6 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm rounded-xl shadow-apple-sm transition-all flex items-center justify-center gap-2">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.66.986 3.288 1.498 4.76 1.499 5.379 0 9.761-4.35 9.763-9.688.001-2.586-1.002-5.017-2.826-6.841C16.462 2.296 14.043 1.293 11.47 1.293c-5.385 0-9.766 4.352-9.769 9.69-.001 2.03.535 4.01 1.549 5.722l-.1.173-1.01 3.691 3.785-.992.179.106zm13.125-7.605c-.14-.234-.515-.375-1.077-.656-.562-.281-3.33-1.641-3.844-1.828-.514-.187-.889-.281-1.264.281-.375.562-1.453 1.828-1.781 2.203-.328.375-.656.422-1.219.14-.563-.281-2.377-.875-4.527-2.795-1.673-1.492-2.797-3.335-3.125-3.897-.328-.562-.035-.867.246-1.147.254-.252.563-.656.844-.984.281-.328.375-.563.563-.938.188-.375.094-.703-.047-.984-.14-.281-1.264-3.047-1.734-4.172-.458-1.099-.924-1.031-1.264-1.031-.328-.001-.703-.002-1.078-.002-.375 0-.984.141-1.499.703-.515.563-1.969 1.922-1.969 4.688 0 2.766 2.016 5.437 2.297 5.813.281.375 3.969 6.06 9.625 8.494 1.345.579 2.395.925 3.216 1.185 1.352.43 2.582.369 3.555.224 1.085-.162 3.33-1.359 3.798-2.672.469-1.313.469-2.438.328-2.672z"/></svg>
@@ -225,11 +221,9 @@
                 </div>
             </div>
 
-            <!-- Right Side: Clean Apple Canvas Sheet Preview -->
             <div id="preview-pane" class="hidden lg:flex bg-white rounded-3xl p-5 md:p-10 shadow-apple-md border border-gray-100 flex-col justify-between aspect-[1/1.414] lg:aspect-auto xl:aspect-[1/1.414] text-neutral-800 transition-all overflow-x-auto">
                 <div class="min-w-[500px] lg:min-w-0 flex flex-col justify-between h-full w-full">
                     <div>
-                        <!-- Document Invoice Design Header Frame -->
                         <div class="flex justify-between items-start border-b-2 border-olive-800/10 pb-6 mb-6">
                             <div class="flex gap-3 md:gap-4">
                                 <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-olive-800 text-white flex items-center justify-center text-xl md:text-2xl shadow-apple-sm">🌱</div>
@@ -245,7 +239,6 @@
                             </div>
                         </div>
 
-                        <!-- Client Target Metadata Profile Layout Block -->
                         <div class="grid grid-cols-3 gap-4 md:gap-6 text-xs border-b border-gray-100 pb-6 mb-6">
                             <div class="col-span-1">
                                 <p class="text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Prepared For</p>
@@ -258,7 +251,6 @@
                             </div>
                         </div>
 
-                        <!-- Plant Data Table Display -->
                         <table class="w-full text-left text-xs">
                             <thead>
                                 <tr class="bg-olive-800 text-white uppercase font-bold tracking-wider">
@@ -273,9 +265,7 @@
                         </table>
                     </div>
 
-                    <!-- Bottom Document Summary Block including Totals and Declaration -->
                     <div class="mt-8 space-y-6">
-                        <!-- Dynamic Financial Calculations Panel -->
                         <div class="border-t border-neutral-200/60 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                             <div class="text-[11px] text-gray-500 font-bold max-w-xs leading-relaxed italic bg-olive-50/50 p-2.5 border border-olive-100/50 rounded-xl" id="p-amount-words">
                                 Rupees Zero Only
@@ -297,7 +287,6 @@
                             </div>
                         </div>
 
-                        <!-- Upgraded Corporate Declaration Block -->
                         <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left text-[11px] text-gray-500 font-medium gap-4">
                             <div>
                                 <p class="font-bold text-neutral-800 text-xs tracking-tight">Sri Ragavendra Nursery</p>
@@ -316,7 +305,6 @@
         </main>
     </div>
 
-    <!-- 3. RETRIEVAL MANAGEMENT DATABASE MODAL CONSOLE -->
     <div id="history-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 z-50">
         <div class="bg-white/90 backdrop-blur-xl rounded-3xl max-w-2xl w-full p-5 md:p-6 shadow-apple-lg max-h-[80vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-4">
@@ -329,7 +317,6 @@
         </div>
     </div>
 
-    <!-- RUNTIME EXECUTION SCRIPTS -->
     <script>
         let currentDocType = 'quotation';
 
@@ -656,7 +643,7 @@
                 return;
             }
 
-            const structuredMetaPayload = {
+            const快速structuredMetaPayload = {
                 itemsList: items,
                 customDeliveryAddress: address,
                 customQuoteIssuedDate: rawDate,
@@ -668,7 +655,7 @@
                 await databases.createDocument(DATABASE_ID, COLLECTION_ID, Appwrite.ID.unique(), {
                     customerName: name,
                     mobileNumber: mobile,
-                    plantItems: JSON.stringify(structuredMetaPayload),
+                    plantItems: JSON.stringify(快速structuredMetaPayload),
                     totalAmount: absoluteGrandTotal
                 });
                 alert('Cloud Synchronization Complete. Record secure in Archive.');
