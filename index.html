@@ -643,7 +643,8 @@
                 return;
             }
 
-            const快速structuredMetaPayload = {
+            // FIXED TYPO: Cleared the translation string block error payload string mapping
+            const structuredMetaPayload = {
                 itemsList: items,
                 customDeliveryAddress: address,
                 customQuoteIssuedDate: rawDate,
@@ -655,7 +656,7 @@
                 await databases.createDocument(DATABASE_ID, COLLECTION_ID, Appwrite.ID.unique(), {
                     customerName: name,
                     mobileNumber: mobile,
-                    plantItems: JSON.stringify(快速structuredMetaPayload),
+                    plantItems: JSON.stringify(structuredMetaPayload),
                     totalAmount: absoluteGrandTotal
                 });
                 alert('Cloud Synchronization Complete. Record secure in Archive.');
