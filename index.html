@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Ragavendra Nursery - Quotations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: {
+                            50: '#f4f6f0',
+                            100: '#e9ede2',
+                            700: '#4a5d4e',
+                            800: '#344237', // Deep Apple plant green
+                            900: '#232c25',
+                        },
+                        crimson: {
+                            600: '#b91c1c', // Premium striking accent red
+                            700: '#991b1b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-olive-50 text-olive-900 min-h-screen transition-all duration-700">
+
+    <div id="login-screen" class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-br from-olive-900 via-olive-800 to-olive-900 px-4">
+        <div id="ambient-glow" class="absolute w-[500px] h-[500px] rounded-full bg-olive-700/20 blur-[80px] pointer-events-none transition-all duration-300 ease-out"></div>
+        
+        <div class="text-center mb-8 z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-2 drop-shadow-sm">Sri Ragavendra Nursery</h1>
+            <p class="text-olive-100/80 text-lg md:text-xl font-light tracking-wide">All Kinds of Fruit plants available.</p>
+        </div>
+
+        <div id="login-card" class="glass-card w-full max-w-md rounded-2xl p-8 shadow-2xl z-10 border border-white/20 transition-transform duration-200 ease-out">
+            <h3 class="text-2xl font-semibold text-olive-900 mb-6 text-center">Staff Authentication</h3>
+            <form id="auth-form" onsubmit="handleLogin(event)" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-olive-800 mb-1">Passcode / Key</label>
+                    <input type="password" id="secret-key" required class="w-full px-4 py-3 rounded-xl bg-white/60 border border-olive-700/20 focus:outline-none focus:border-olive-700 transition-colors text-lg tracking-widest text-center" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-olive-800 hover:bg-olive-900 text-white font-medium py-3 rounded-xl shadow-lg transition-all transform active:scale-95">Enter Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
+        <header class="bg-white border-b border-olive-100 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-olive-800">Sri Ragavendra Nursery</h2>
+                <p class="text-xs text-gray-500">Official Quotation Studio</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleHistoryModal()" class="px-4 py-2 text-sm font-medium border border-olive-700/30 text-olive-800 rounded-lg hover:bg-olive-50 transition-colors">📄 Retrieve Old Quotes</button>
+                <button onclick="handleLogout()" class="px-4 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">Sign Out</button>
+            </div>
+        </header>
+
+        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-olive-100 flex flex-col justify-between">
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold text-olive-800 border-b pb-2">1. Customer Information</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Customer Name</label>
+                            <input type="text" id="cust-name" oninput="updateLivePreview()" class="w-full px-3 py-2 rounded-lg bg-olive-50/50 border border-gray-200 focus:outline-none focus:border-olive-700 text-sm" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Mobile Number</label>
+                            <input type="tel" id="cust-mobile" oninput="updateLivePreview()" class="w-full px-3 py-2 rounded-lg bg-olive-50/50 border border-gray-200 focus:outline-none focus:border-olive-700 text-sm" placeholder="+91 XXXXX XXXXX">
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-olive-800 border-b pb-2 pt-2">2. Plant Inventory Particulars</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-100 text-gray-500 font-medium">
+                                    <th class="py-2 w-12">S.No</th>
+                                    <th class="py-2">Particulars (Plant Name)</th>
+                                    <th class="py-2 w-20">Qty</th>
+                                    <th class="py-2 w-28">Amount (₹)</th>
+                                    <th class="py-2 w-12 text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="plant-rows">
+                                </tbody>
+                        </table>
+                    </div>
+                    <button onclick="addNewRow()" class="text-sm font-semibold text-olive-700 hover:text-olive-900 flex items-center gap-1">+ Add New Plant Entry</button>
+                </div>
+
+                <div class="pt-6 border-t mt-6 flex justify-between items-center">
+                    <button onclick="saveQuoteToAppwrite()" class="px-6 py-3 bg-olive-800 hover:bg-olive-900 text-white font-medium rounded-xl shadow transition-colors">Sync & Save Quote</button>
+                    <button onclick="window.print()" class="px-6 py-3 bg-crimson-600 hover:bg-crimson-700 text-white font-medium rounded-xl shadow transition-colors flex items-center gap-2">
+                        <span>📥 Download Document PDF</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="print-area" class="bg-white rounded-2xl p-8 shadow-md border border-gray-100 flex flex-col justify-between aspect-[1/1.414] text-neutral-800">
+                <div>
+                    <div class="flex justify-between items-start border-b-2 border-olive-700/20 pb-6 mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-olive-800 tracking-wide">SRI RAGAVENDRA NURSERY</h1>
+                            <p class="text-xs text-olive-700 font-medium tracking-wider uppercase mt-0.5">All Kinds of Fruit plants available</p>
+                            <p class="text-xs text-gray-500 mt-2">📱 +91 9448515060 | +91 8892689595</p>
+                        </div>
+                        <div class="text-right">
+                            <h2 class="text-xl font-bold text-crimson-600 tracking-tight">QUOTATION</h2>
+                            <p class="text-xs text-gray-400 mt-1" id="preview-date">Date: DD/MM/YYYY</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-olive-50/50 rounded-xl p-4 mb-6 grid grid-cols-2 gap-4 text-xs border border-olive-100/50">
+                        <div>
+                            <p class="text-gray-400 uppercase font-medium tracking-wider mb-1">Prepared For</p>
+                            <p id="p-name" class="font-semibold text-sm text-olive-900">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 uppercase font-medium tracking-wider mb-1">Contact Reference</p>
+                            <p id="p-mobile" class="font-semibold text-sm text-olive-900">-</p>
+                        </div>
+                    </div>
+
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="bg-olive-800 text-white uppercase font-semibold tracking-wider">
+                                <th class="p-3 rounded-l-md w-12 text-center">S.No</th>
+                                <th class="p-3">Particulars (Plants Name)</th>
+                                <th class="p-3 w-16 text-center">Qty</th>
+                                <th class="p-3 w-24 text-right rounded-r-md">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-rows" class="divide-y divide-gray-100">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="border-t pt-4 mt-6 flex justify-between items-center">
+                    <div class="text-xs text-gray-400">
+                        <p>Thank you for shopping with us!</p>
+                        <p class="italic mt-0.5">Subject to terms & availability.</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-gray-400 font-medium uppercase tracking-widest block mb-0.5">Estimated Total Cost</span>
+                        <span id="p-total" class="text-2xl font-bold text-crimson-600">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[80vh] flex flex-col">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-lg font-bold text-olive-800">Historical Quotes Database</h3>
+                <button onclick="toggleHistoryModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            </div>
+            <div class="overflow-y-auto flex-1 space-y-3" id="history-list">
+                <p class="text-sm text-gray-500 text-center py-8">Fetching old quotes archive...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION PATHWAYS ---
+        // Inserted your personal Appwrite variables down here:
+        const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1'; 
+        const APPWRITE_PROJECT = 'sgp-6a3ba067000a0cd94dba';
+        const DATABASE_ID = 'NurseryDB';
+        const COLLECTION_ID = 'Quotations';
+
+        // Set up the internal local state array tracking plants
+        let items = [{ particulars: '', qty: 1, amount: 0 }];
+
+        // Initialize the Web Client Engine
+        const client = new Appwrite.Client();
+        let databases;
+        if(APPWRITE_ENDPOINT !== 'YOUR_APPWRITE_ENDPOINT_HERE') {
+            client.setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
+            databases = new Appwrite.Databases(client);
+        }
+
+        // --- 2. PREMIUM CURSOR DELAY ANIMATION ---
+        const loginCard = document.getElementById('login-card');
+        const ambientGlow = document.getElementById('ambient-glow');
+        
+        document.getElementById('login-screen').addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            // Guide the soft gradient trail behind cursor movement
+            ambientGlow.style.left = `${clientX - 250}px`;
+            ambientGlow.style.top = `${clientY - 250}px`;
+            
+            // Apply slight interactive tilting effect to user interface card
+            const xRotation = ((clientY - window.innerHeight / 2) / window.innerHeight) * 15;
+            const yRotation = ((clientX - window.innerWidth / 2) / window.innerWidth) * -15;
+            loginCard.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+        });
+
+        // --- 3. SECURITY GATEWAYS ---
+        function handleLogin(e) {
+            e.preventDefault();
+            // Secure access credential block (simple custom manager key)
+            if(document.getElementById('secret-key').value === '94485') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                renderFormRows();
+                updateLivePreview();
+            } else {
+                alert('Invalid Authentication Key. Please try again.');
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('secret-key').value = '';
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+        }
+
+        // --- 4. DATA LOGISTICS & LOGIC CONTROLLERS ---
+        function renderFormRows() {
+            const tbody = document.getElementById('plant-rows');
+            tbody.innerHTML = items.map((item, index) => `
+                <tr class="border-b border-gray-50">
+                    <td class="py-2 font-medium text-gray-400">${index + 1}</td>
+                    <td class="py-2 pr-2">
+                        <input type="text" value="${item.particulars}" oninput="updateItem(${index}, 'particulars', this.value)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm" placeholder="Mango Plant, Apple Plant...">
+                    </td>
+                    <td class="py-2 pr-2">
+                        <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseInt(this.value) || 0)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm text-center">
+                    </td>
+                    <td class="py-2 pr-2">
+                        <input type="number" value="${item.amount}" oninput="updateItem(${index}, 'amount', parseFloat(this.value) || 0)" class="w-full px-2 py-1 bg-gray-50 border border-transparent rounded focus:bg-white focus:border-olive-700 text-sm text-right">
+                    </td>
+                    <td class="py-2 text-center">
+                        <button onclick="removeRow(${index})" class="text-gray-300 hover:text-crimson-600 font-bold text-base">&times;</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function addNewRow() {
+            items.push({ particulars: '', qty: 1, amount: 0 });
+            renderFormRows();
+            updateLivePreview();
+        }
+
+        function removeRow(index) {
+            if(items.length > 1) {
+                items.splice(index, 1);
+                renderFormRows();
+                updateLivePreview();
+            }
+        }
+
+        function updateItem(index, key, value) {
+            items[index][key] = value;
+            updateLivePreview();
+        }
+
+        function updateLivePreview() {
+            // Synchronize Input Fields with clean Preview Screen layout
+            document.getElementById('p-name').innerText = document.getElementById('cust-name').value || 'Customer Name Placeholder';
+            document.getElementById('p-mobile').innerText = document.getElementById('cust-mobile').value || 'Not Disclosed';
+            document.getElementById('preview-date').innerText = `Date: ${new Date().toLocaleDateString('en-IN')}`;
+            
+            let total = 0;
+            const previewBody = document.getElementById('preview-rows');
+            
+            previewBody.innerHTML = items.map((item, idx) => {
+                const lineTotal = item.qty * item.amount;
+                total += lineTotal;
+                return `
+                    <tr class="hover:bg-olive-50/30">
+                        <td class="p-3 text-center text-gray-400 font-medium">${idx + 1}</td>
+                        <td class="p-3 font-medium text-olive-900">${item.particulars || 'Unnamed Plant Entry'}</td>
+                        <td class="p-3 text-center text-gray-600">${item.qty}</td>
+                        <td class="p-3 text-right font-medium text-neutral-900">₹${lineTotal.toFixed(2)}</td>
+                    </tr>
+                `;
+            }).join('');
+            
+            document.getElementById('p-total').innerText = `₹${total.toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+        }
+
+        // --- 5. SERVER SYNCHRONIZATION (APPWRITE INTERACTION) ---
+        async function saveQuoteToAppwrite() {
+            if(!databases) {
+                alert('Setup Notice: Database engine could not be initialized.');
+                return;
+            }
+            
+            const name = document.getElementById('cust-name').value;
+            const mobile = document.getElementById('cust-mobile').value;
+            let total = items.reduce((sum, item) => sum + (item.qty * item.amount), 0);
+
+            if(!name || !mobile) {
+                alert('Validation Alert: Customer Name and Contact details are required to record quotations.');
+                return;
+            }
+
+            try {
+                await databases.createDocument(DATABASE_ID, COLLECTION_ID, Appwrite.ID.unique(), {
+                    customerName: name,
+                    mobileNumber: mobile,
+                    plantItems: JSON.stringify(items),
+                    totalAmount: total
+                });
+                alert('Success! Quotation safely stored in Appwrite Cloud.');
+            } catch (error) {
+                console.error(error);
+                alert('Database Transmission Failed: ' + error.message);
+            }
+        }
+
+        async function toggleHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.toggle('hidden');
+            
+            if(!modal.classList.contains('hidden')) {
+                const listContainer = document.getElementById('history-list');
+                if(!databases) {
+                    listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Database system unlinked.</p>`;
+                    return;
+                }
+                
+                try {
+                    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
+                    if(response.documents.length === 0) {
+                        listContainer.innerHTML = `<p class="text-sm text-center text-gray-400 py-4">No previous records exist within database archive yet.</p>`;
+                        return;
+                    }
+                    
+                    listContainer.innerHTML = response.documents.map(doc => `
+                        <div class="border border-olive-100 rounded-xl p-4 flex justify-between items-center hover:bg-olive-50/50 transition-colors">
+                            <div>
+                                <h4 class="font-bold text-olive-800">${doc.customerName} (<span class="text-xs text-gray-500">${doc.mobileNumber}</span>)</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Recorded on: ${new Date(doc.$createdAt).toLocaleString('en-IN')}</p>
+                            </div>
+                            <div class="text-right flex items-center gap-3">
+                                <span class="font-bold text-crimson-600 text-base">₹${doc.totalAmount}</span>
+                                <button onclick="loadHistoricQuote('${btoa(doc.plantItems)}', '${doc.customerName}', '${doc.mobileNumber}')" class="px-3 py-1 bg-olive-700 text-white rounded text-xs font-medium hover:bg-olive-800">Load</button>
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    listContainer.innerHTML = `<p class="text-sm text-center text-red-500 py-4">Error accessing records: ${error.message}</p>`;
+                }
+            }
+        }
+
+        function loadHistoricQuote(encodedItems, name, mobile) {
+            items = JSON.parse(atob(encodedItems));
+            document.getElementById('cust-name').value = name;
+            document.getElementById('cust-mobile').value = mobile;
+            renderFormRows();
+            updateLivePreview();
+            toggleHistoryModal();
+        }
+    </script>
+</body>
+</html>
