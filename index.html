@@ -271,21 +271,14 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end pt-2">
-                            <div class="w-56 text-right flex flex-col items-end">
-                                <span class="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-1">Authorized Signatory</span>
-                                
-                                <svg class="w-44 h-12 text-neutral-900 my-0.5 mix-blend-multiply" viewBox="0 0 160 40" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M 20 15 C 24 10, 31 10, 31 16 C 31 22, 23 23, 17 23 C 19 18, 18 12, 22 11 C 24 10, 26 12, 25 14" />
-                                    <path d="M 38 21 C 42 18, 48 14, 52 17 C 54 19, 51 22, 48 22 C 45 22, 49 17, 53 16 C 56 15, 60 19, 58 21 C 56 22, 58 17, 62 16 C 65 15, 68 18, 67 21 M 67 21 C 70 17, 75 13, 79 15 C 81 16, 79 20, 76 21 C 73 22, 76 16, 81 15 C 84 14, 88 18, 86 21" />
-                                    <path d="M 86 21 C 90 16, 95 12, 99 14 C 101 15, 99 20, 95 21 C 92 22, 95 15, 100 14 C 104 13, 108 18, 106 21 C 105 22, 109 15, 115 14 C 119 13, 123 18, 121 21" />
-                                    <path d="M 121 21 C 127 18, 136 14, 144 15 M 147 16 F 1" />
-                                </svg>
-                                
-                                <span class="text-xs font-bold text-neutral-900 block tracking-tight">D. Magendiran</span>
-                                <span class="text-[11px] font-semibold text-gray-500 block leading-tight">Proprietor</span>
-                                <span class="text-[10px] text-gray-400 block mt-0.5">+91 9448515060</span>
-                                <span class="text-[10px] text-gray-400 block leading-tight">ragavendranursery@gmail.com</span>
+                        <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left text-[11px] text-gray-500 font-medium gap-2">
+                            <div>
+                                <p class="font-bold text-neutral-800">Sri Ragavendra Nursery</p>
+                                <p class="text-[10px] text-gray-400">Proprietor Contact: +91 9448515060 | ragavendranursery@gmail.com</p>
+                            </div>
+                            <div class="bg-olive-100/50 border border-olive-200/30 rounded-xl px-4 py-2 text-olive-800 flex items-center gap-1.5">
+                                <span>🖥️</span>
+                                <span>This is a computer-generated Quotation/Bill. Signature is not required.</span>
                             </div>
                         </div>
                     </div>
@@ -307,14 +300,12 @@
     </div>
 
     <script>
-        // CORE LIFECYCLE RUNTIME CHECK: Run as soon as the window loads to check sticky note status
+        // CORE LIFECYCLE RUNTIME CHECK: Persistent Login Sticky Note Verification
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('cust-date').value = new Date().toISOString().split('T')[0];
             
-            // Check browser sticky memory note
             const loginStatus = localStorage.getItem('nursery_logged_in');
             if (loginStatus === 'true') {
-                // If sticky memory note is present, skip the login wall instantly
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 renderFormRows();
@@ -352,9 +343,7 @@
         function handleLogin(e) {
             e.preventDefault();
             if(document.getElementById('secret-key').value === '94485') {
-                // Set sticky note memory flag
                 localStorage.setItem('nursery_logged_in', 'true');
-                
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 renderFormRows();
@@ -365,9 +354,7 @@
         }
 
         function handleLogout() {
-            // Delete sticky note memory flag
             localStorage.removeItem('nursery_logged_in');
-            
             document.getElementById('secret-key').value = '';
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
@@ -537,10 +524,7 @@
             }
             
             message += `\n----------------------------------------\n`;
-            message += `✍️ *Authorized Signatory:*\n`;
-            message += `D. Magendiran (Proprietor)\n`;
-            message += `📞 +91 9448515060\n`;
-            message += `✉️ ragavendranursery@gmail.com\n`;
+            message += `🖥️ _This is a computer-generated Quotation/Bill. Signature is not required._\n`;
             message += `----------------------------------------\n`;
             message += `🙏 _Thank you for shopping with us!_`;
 
